@@ -99,4 +99,48 @@ public class HexMap : MonoBehaviour
         }
         return map;
     }
+
+    // Returns tile at given hex coordinate
+    GameObject getTile(Vector2 loc)
+    {
+        return tileMap[loc];
+    }
+
+    // Returns list of all neighboring tiles
+    List<Vector2> getNeighbors(Vector2 loc)
+    {
+        List<Vector2> neighbors = new List<Vector2>();
+        Vector2 possibleNeighbor;
+
+        for(int y = (int)loc.y - 1; y <= loc.y + 1; y += 2) // two above and two below
+        {
+            possibleNeighbor = new Vector2(loc.x,y);
+            if(tileMap.ContainsKey(possibleNeighbor))
+            {
+                neighbors.Add(possibleNeighbor);
+            }
+
+            possibleNeighbor = new Vector2(loc.x - 1 + ((loc.y % 2) * 2),y);
+            if(tileMap.ContainsKey(possibleNeighbor))
+            {
+                neighbors.Add(possibleNeighbor);
+            }
+        }
+
+        // two on either side
+        possibleNeighbor = loc;
+        possibleNeighbor.x += 1;
+        if(tileMap.ContainsKey(possibleNeighbor))
+        {
+            neighbors.Add(possibleNeighbor);
+        }
+
+        possibleNeighbor.x -= 2;
+        if(tileMap.ContainsKey(possibleNeighbor))
+        {
+            neighbors.Add(possibleNeighbor);
+        }
+
+        return neighbors;
+    }
 }
