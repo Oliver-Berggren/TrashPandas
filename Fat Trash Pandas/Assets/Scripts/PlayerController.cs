@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
         if(Physics.Raycast(ray, out tileHit))
         {
             Vector2 tile = HexMap.instance.worldToHex(tileHit.transform.position);
-            int type = HexMap.instance.getTile(tile).GetComponent<TileInfo>().tileType;
+            int type = HexMap.instance.getTileType(tile);
             switch(type) // none: 0, empty: 1, dump: 2, den: 3, gas: 4, hole: 5, trash: 6
             {
                 case 1:
