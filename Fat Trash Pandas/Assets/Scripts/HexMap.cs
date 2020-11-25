@@ -22,8 +22,13 @@ public class HexMap : MonoBehaviour
     // Map layout in text file form
     public TextAsset mapLayout;
 
+    // Static game map instance
+    public static HexMap instance;
+
     void Start()
     {
+        instance = this.GetComponent<HexMap>();
+
         List<List<int>> mapRaw = textToLayout();
         // Calculate length of one side(same as distance from center point to corner point)
         sideLength = tile.GetComponent<Renderer>().bounds.size.z / 2 + spacing;
@@ -62,8 +67,8 @@ public class HexMap : MonoBehaviour
     // Returns hex coordinate approximation of world pos
     public Vector2 worldToHex(Vector3 worldPos)
     {
-        int y = (int)Mathf.Floor((worldPos.y + sideLength) / yOffset);
-        int x = (int)Mathf.Floor((worldPos.y + (y % 2) * (xOffset / 2)) / xOffset);
+        int y = (int)Mathf.Floor((worldPos.z + sideLength) / yOffset);
+        int x = (int)Mathf.Floor((worldPos.x) / xOffset);
 
         return new Vector2(x,y);
     }
@@ -101,7 +106,7 @@ public class HexMap : MonoBehaviour
     }
 
     // Returns tile at given hex coordinate
-    GameObject getTile(Vector2 loc)
+    public GameObject getTile(Vector2 loc)
     {
         return tileMap[loc];
     }
