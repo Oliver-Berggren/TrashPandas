@@ -289,8 +289,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295051310}
-  m_LocalRotation: {x: -0.48416516, y: -0.0333099, z: 0.018450597, w: -0.87414765}
-  m_LocalPosition: {x: 4.9, y: 15, z: -5.9}
+  m_LocalRotation: {x: 0.03305164, y: -0.8152551, z: 0.5762642, w: 0.046757903}
+  m_LocalPosition: {x: 8.705138, y: 12.543884, z: 8.2986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -326,9 +326,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 8148155511962415167, guid: db2383130893a8e4595a7ff1340ef8e7, type: 3}
-  width: 10
-  height: 10
   spacing: 0.25
+  mapLayout: {fileID: 4900000, guid: 13dee98d2d49b3d4b86847b6f73d244c, type: 3}
 --- !u!4 &578399559
 Transform:
   m_ObjectHideFlags: 0
