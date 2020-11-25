@@ -326,7 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 8148155511962415167, guid: db2383130893a8e4595a7ff1340ef8e7, type: 3}
-  spacing: 0.25
+  spacing: 0.1
   mapLayout: {fileID: 4900000, guid: 13dee98d2d49b3d4b86847b6f73d244c, type: 3}
 --- !u!4 &578399559
 Transform:

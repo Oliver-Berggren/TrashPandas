@@ -26,11 +26,11 @@ public class HexMap : MonoBehaviour
     {
         List<List<int>> mapRaw = textToLayout();
         // Calculate length of one side(same as distance from center point to corner point)
-        sideLength = tile.GetComponent<Renderer>().bounds.size.x / 2;
+        sideLength = tile.GetComponent<Renderer>().bounds.size.z / 2 + spacing;
 
         // Calculate placement values
         yOffset = (3 * sideLength) / 2;
-        xOffset = Mathf.Sqrt(3) * (sideLength + spacing);
+        xOffset = Mathf.Sqrt(3) * (sideLength);
 
         // Spawn Map tiles
         for(int y = 0; y < mapRaw.Count; ++y)
