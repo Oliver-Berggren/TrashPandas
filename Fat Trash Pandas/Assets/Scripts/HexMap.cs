@@ -148,4 +148,9 @@ public class HexMap : MonoBehaviour
 
         return neighbors;
     }
+
+    public int getTileType(Vector2 tile)
+    {
+        return tileMap[tile].GetComponent<TileInfo>().tileType;
+    }
 }
