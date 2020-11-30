@@ -153,4 +153,10 @@ public class HexMap : MonoBehaviour
     {
         return tileMap[tile].GetComponent<TileInfo>().tileType;
     }
+
+    // Returns whether or not the tile at the given hex coordinate is traversable (empty tile or not)
+    public bool isTraversable(Vector2 tile)
+    {
+        return tileMap[tile].GetComponent<TileInfo>().tileType == 1 ? true : false;
+    }
 }
