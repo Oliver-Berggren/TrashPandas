@@ -40,25 +40,12 @@ public class HexMap : MonoBehaviour
         // Spawn Map tiles
         for(int y = 0; y < mapRaw.Count; ++y)
         {
-            float lineOffset = (y % 2) * (xOffset / 2);
             for(int x = 0; x < mapRaw[y].Count; ++x)
             {
                 // none: 0, empty: 1, dump: 2, den: 3, gas: 4, hole: 5, trash: 6
                 if(mapRaw[y][x] != 0) // tile drawn
                 {
-                    GameObject newTile = Instantiate(tile, new Vector3(x * xOffset + lineOffset, 0, y * yOffset), Quaternion.identity);
-                    newTile.transform.parent = this.transform;
-                    newTile.name = "( " + x + " , " + y + " )";
-                    tileMap[new Vector2(x,y)] = newTile;
-
-                    if(mapRaw[y][x] == 6) // empty tile with trash placed
-                    {
-                        newTile.GetComponent<TileInfo>().init(6, null, new Vector2(x,y));
-                    }
-                    else // static or empty tile
-                    {
-                        newTile.GetComponent<TileInfo>().init(mapRaw[y][x], null, new Vector2(x,y));
-                    }
+                    instance.addTile(new Vector2(x, y), mapRaw[y][x]);
                 } // otherwise empty space with no tile
             }
         }
@@ -158,5 +145,36 @@ public class HexMap : MonoBehaviour
     public bool isTraversable(Vector2 tile)
     {
         return tileMap[tile].GetComponent<TileInfo>().tileType == 1 ? true : false;
+    }
+
+    // Adds a tile of given type to given hex grid location
+    void addTile(Vector2 loc, int type)
+    {
+        GameObject newTile = Instantiate(tile, instance.hexToWorld(loc), Quaternion.identity);
+        newTile.transform.parent = this.transform;
+        newTile.name = "( " + loc.x + " , " + loc.y + " )";
+        tileMap[loc] = newTile;
+
+        switch(type)
+        {
+            case 1: // Empty
+                newTile.GetComponent<TileInfo>().init(type, null, loc);
+                break;
+            case 2: // Dump
+                newTile.GetComponent<TileInfo>().init(type, null, loc);
+                break;
+            case 3: // Den
+                newTile.GetComponent<TileInfo>().init(type, null, loc);
+                break;
+            case 4: // Gas
+                newTile.GetComponent<TileInfo>().init(type, null, loc);
+                break;
+            case 5: // Hole
+                newTile.GetComponent<TileInfo>().init(type, null, loc);
+                break;
+            case 6: // Trash
+                newTile.GetComponent<TileInfo>().init(type, null, loc);
+                break;
+        }
     }
 }
