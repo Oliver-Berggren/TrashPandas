@@ -75,7 +75,7 @@ public class HexMap : MonoBehaviour
     // Returns world position of hex coordinate
     public Vector3 hexToWorld(Vector2 hexPos)
     {
-        return new Vector3(hexPos.x * xOffset + (hexPos.y % 2) * (xOffset / 2), tileHeight, hexPos.y * yOffset);
+        return new Vector3(hexPos.x * xOffset + (hexPos.y % 2) * (xOffset / 2), 0, hexPos.y * yOffset);
     }
 
     // Makes 2d list of map with tile types from text file
@@ -167,28 +167,53 @@ public class HexMap : MonoBehaviour
         {
             case 2: // Dump
                 newTile = Instantiate(dumpTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                tileMap[loc] = newTile;
                 break;
             case 3: // Den
                 newTile = Instantiate(denTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                tileMap[loc] = newTile;
                 break;
             case 4: // Gas
                 newTile = Instantiate(gasTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                tileMap[loc] = newTile;
                 break;
             case 5: // Hole
                 newTile = Instantiate(holeTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                tileMap[loc] = newTile;
                 break;
             case 6: // Trash
                 newTile = Instantiate(emptyTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                tileMap[loc] = newTile;
+                GameObject trash = Instantiate(trashPiecePrefab, Vector2.zero, Quaternion.identity);
+                // trash.transform.parent = this.transform.parent.Find("TrashPieces");
+                instance.addPiece(loc, trash);
                 newTile.GetComponent<TileInfo>().tileType = 6;
                 break;
             default: // Empty
                 newTile = Instantiate(emptyTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                tileMap[loc] = newTile;
                 break;
         }
 
         newTile.GetComponent<TileInfo>().hexCoordinate = loc;
         newTile.transform.parent = this.transform;
         newTile.name = "( " + loc.x + " , " + loc.y + " )";
-        tileMap[loc] = newTile;
+    }
+
+    // Adds a piece to a given empty tile
+    void addPiece(Vector2 loc, GameObject obj)
+    {
+        Vector3 pos = instance.hexToWorld(loc);
+        pos.y += tileHeight;
+        obj.transform.position = pos;
+        tileMap[loc].GetComponent<TileInfo>().occupant = obj;
+    }
+
+    // Removes a piece from a given empty tile
+    GameObject removePiece(Vector2 loc)
+    {
+        GameObject obj = tileMap[loc].transform.GetComponent<TileInfo>().occupant;
+        tileMap[loc].transform.GetComponent<TileInfo>().occupant = null;
+        return obj;
     }
 }
