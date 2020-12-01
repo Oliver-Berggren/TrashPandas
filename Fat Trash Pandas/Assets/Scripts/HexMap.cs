@@ -8,6 +8,7 @@ public class HexMap : MonoBehaviour
     // Tile prefab type
     public GameObject tile;
     float sideLength;
+    float tileHeight;
 
     // Display Parameters
     public float spacing;
@@ -30,8 +31,12 @@ public class HexMap : MonoBehaviour
         instance = this.GetComponent<HexMap>();
 
         List<List<int>> mapRaw = textToLayout();
+
         // Calculate length of one side(same as distance from center point to corner point)
         sideLength = tile.GetComponent<Renderer>().bounds.size.z / 2 + spacing;
+
+        // Calculate height of tile (to determine y offset of placement)
+        tileHeight = tile.GetComponent<Renderer>().bounds.size.y;
 
         // Calculate placement values
         yOffset = (3 * sideLength) / 2;
@@ -63,7 +68,7 @@ public class HexMap : MonoBehaviour
     // Returns world position of hex coordinate
     public Vector3 hexToWorld(Vector2 hexPos)
     {
-        return new Vector3(hexPos.x * xOffset + (hexPos.y % 2) * (xOffset / 2), 0, hexPos.y * yOffset);
+        return new Vector3(hexPos.x * xOffset + (hexPos.y % 2) * (xOffset / 2), tileHeight / 2, hexPos.y * yOffset);
     }
 
     // Makes 2d list of map with tile types from text file
