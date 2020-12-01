@@ -289,8 +289,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295051310}
-  m_LocalRotation: {x: 0.46859697, y: -0.52974457, z: 0.47027424, w: 0.5278538}
-  m_LocalPosition: {x: 7.3737044, y: 11.486744, z: 5.135922}
+  m_LocalRotation: {x: 0.41121534, y: -0.5052617, z: 0.29773942, w: 0.69782794}
+  m_LocalPosition: {x: 17.229708, y: 12.986538, z: 5.807391}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -325,7 +325,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1801eaaecbd104d8002b8841741829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 8148155511962415167, guid: db2383130893a8e4595a7ff1340ef8e7, type: 3}
+  emptyTilePrefab: {fileID: 8148155511962415167, guid: db2383130893a8e4595a7ff1340ef8e7,
+    type: 3}
+  dumpTilePrefab: {fileID: 8782476118673439497, guid: 34f13764e637abe499dc1489c987b811,
+    type: 3}
+  denTilePrefab: {fileID: 4893678810303691909, guid: b0df899858c674f4c910bcc56d55f7a9,
+    type: 3}
+  gasTilePrefab: {fileID: 6070078166626044369, guid: 8f2333aa229d66e49a1fcede618e2e6a,
+    type: 3}
+  holeTilePrefab: {fileID: 171911477294111787, guid: 6b0b4d59921727244a7d2635afc2a9b2,
+    type: 3}
+  trashPiecePrefab: {fileID: 0}
   spacing: 0.1
   mapLayout: {fileID: 4900000, guid: 13dee98d2d49b3d4b86847b6f73d244c, type: 3}
 --- !u!4 &578399559

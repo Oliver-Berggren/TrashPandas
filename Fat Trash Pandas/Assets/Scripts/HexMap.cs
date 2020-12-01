@@ -6,9 +6,16 @@ using System.IO;
 public class HexMap : MonoBehaviour
 {
     // Tile prefab type
-    public GameObject tile;
     float sideLength;
     float tileHeight;
+
+    // Tile prefabs
+    public GameObject emptyTilePrefab;
+    public GameObject dumpTilePrefab;
+    public GameObject denTilePrefab;
+    public GameObject gasTilePrefab;
+    public GameObject holeTilePrefab;
+    public GameObject trashPiecePrefab;
 
     // Display Parameters
     public float spacing;
@@ -33,10 +40,10 @@ public class HexMap : MonoBehaviour
         List<List<int>> mapRaw = textToLayout();
 
         // Calculate length of one side(same as distance from center point to corner point)
-        sideLength = tile.GetComponent<Renderer>().bounds.size.z / 2 + spacing;
+        sideLength = holeTilePrefab.GetComponent<Renderer>().bounds.size.z / 2 + spacing;
 
         // Calculate height of tile (to determine y offset of placement)
-        tileHeight = tile.GetComponent<Renderer>().bounds.size.y;
+        tileHeight = emptyTilePrefab.GetComponent<Renderer>().bounds.size.y;
 
         // Calculate placement values
         yOffset = (3 * sideLength) / 2;
@@ -68,7 +75,7 @@ public class HexMap : MonoBehaviour
     // Returns world position of hex coordinate
     public Vector3 hexToWorld(Vector2 hexPos)
     {
-        return new Vector3(hexPos.x * xOffset + (hexPos.y % 2) * (xOffset / 2), tileHeight / 2, hexPos.y * yOffset);
+        return new Vector3(hexPos.x * xOffset + (hexPos.y % 2) * (xOffset / 2), tileHeight, hexPos.y * yOffset);
     }
 
     // Makes 2d list of map with tile types from text file
@@ -155,31 +162,33 @@ public class HexMap : MonoBehaviour
     // Adds a tile of given type to given hex grid location
     void addTile(Vector2 loc, int type)
     {
-        GameObject newTile = Instantiate(tile, instance.hexToWorld(loc), Quaternion.identity);
+        GameObject newTile;
+        switch(type)
+        {
+            case 2: // Dump
+                newTile = Instantiate(dumpTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                break;
+            case 3: // Den
+                newTile = Instantiate(denTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                break;
+            case 4: // Gas
+                newTile = Instantiate(gasTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                break;
+            case 5: // Hole
+                newTile = Instantiate(holeTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                break;
+            case 6: // Trash
+                newTile = Instantiate(emptyTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                newTile.GetComponent<TileInfo>().tileType = 6;
+                break;
+            default: // Empty
+                newTile = Instantiate(emptyTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                break;
+        }
+
+        newTile.GetComponent<TileInfo>().hexCoordinate = loc;
         newTile.transform.parent = this.transform;
         newTile.name = "( " + loc.x + " , " + loc.y + " )";
         tileMap[loc] = newTile;
-
-        switch(type)
-        {
-            case 1: // Empty
-                newTile.GetComponent<TileInfo>().init(type, null, loc);
-                break;
-            case 2: // Dump
-                newTile.GetComponent<TileInfo>().init(type, null, loc);
-                break;
-            case 3: // Den
-                newTile.GetComponent<TileInfo>().init(type, null, loc);
-                break;
-            case 4: // Gas
-                newTile.GetComponent<TileInfo>().init(type, null, loc);
-                break;
-            case 5: // Hole
-                newTile.GetComponent<TileInfo>().init(type, null, loc);
-                break;
-            case 6: // Trash
-                newTile.GetComponent<TileInfo>().init(type, null, loc);
-                break;
-        }
     }
 }
