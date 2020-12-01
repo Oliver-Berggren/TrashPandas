@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileType: 4
-  occupant: {fileID: 0}
+  occupant: {fileID: 6070078166626044369}
   hexCoordinate: {x: 0, y: 0}
 --- !u!64 &5738173758656001351
 MeshCollider:

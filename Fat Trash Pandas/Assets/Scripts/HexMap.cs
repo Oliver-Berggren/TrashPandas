@@ -40,14 +40,14 @@ public class HexMap : MonoBehaviour
         List<List<int>> mapRaw = textToLayout();
 
         // Calculate length of one side(same as distance from center point to corner point)
-        sideLength = holeTilePrefab.GetComponent<Renderer>().bounds.size.z / 2 + spacing;
+        sideLength = holeTilePrefab.GetComponent<Renderer>().bounds.size.x / 2 + spacing;
 
         // Calculate height of tile (to determine y offset of placement)
         tileHeight = emptyTilePrefab.GetComponent<Renderer>().bounds.size.y;
 
         // Calculate placement values
-        yOffset = (3 * sideLength) / 2;
-        xOffset = Mathf.Sqrt(3) * (sideLength);
+        xOffset = (3 * sideLength) / 2;
+        yOffset = Mathf.Sqrt(3) * (sideLength);
 
         // Spawn Map tiles
         for(int y = 0; y < mapRaw.Count; ++y)
@@ -66,8 +66,8 @@ public class HexMap : MonoBehaviour
     // Returns hex coordinate approximation of world pos
     public Vector2 worldToHex(Vector3 worldPos)
     {
-        int y = (int)Mathf.Floor((worldPos.z + sideLength) / yOffset);
-        int x = (int)Mathf.Floor((worldPos.x) / xOffset);
+        int x = (int)Mathf.Floor((worldPos.x + sideLength) / xOffset);
+        int y = (int)Mathf.Floor((worldPos.z) / yOffset);
 
         return new Vector2(x,y);
     }
@@ -75,7 +75,7 @@ public class HexMap : MonoBehaviour
     // Returns world position of hex coordinate
     public Vector3 hexToWorld(Vector2 hexPos)
     {
-        return new Vector3(hexPos.x * xOffset + (hexPos.y % 2) * (xOffset / 2), 0, hexPos.y * yOffset);
+        return new Vector3(hexPos.x * xOffset, 0, hexPos.y * yOffset + (hexPos.x % 2) * (yOffset / 2));
     }
 
     // Makes 2d list of map with tile types from text file
@@ -185,7 +185,6 @@ public class HexMap : MonoBehaviour
                 newTile = Instantiate(emptyTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
                 tileMap[loc] = newTile;
                 GameObject trash = Instantiate(trashPiecePrefab, Vector2.zero, Quaternion.identity);
-                // trash.transform.parent = this.transform.parent.Find("TrashPieces");
                 instance.addPiece(loc, trash);
                 newTile.GetComponent<TileInfo>().tileType = 6;
                 break;
