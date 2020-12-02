@@ -335,7 +335,7 @@ MonoBehaviour:
     type: 3}
   holeTilePrefab: {fileID: 171911477294111787, guid: 6b0b4d59921727244a7d2635afc2a9b2,
     type: 3}
-  trashPiecePrefab: {fileID: 2596545913781631620, guid: f31efeda108e8d54bb850ccd700813f7,
+  trashPiecePrefab: {fileID: 7977739633874924187, guid: d30990db842bb5d4398c83ff5c9d16ff,
     type: 3}
   spacing: 0.1
   mapLayout: {fileID: 4900000, guid: 13dee98d2d49b3d4b86847b6f73d244c, type: 3}
