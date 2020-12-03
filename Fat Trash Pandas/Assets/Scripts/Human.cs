@@ -13,13 +13,17 @@ public class Human : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //if in move mode,
+        //highlight moveable hexes
+        //do the stuff in the playercontroller.cs thing
+        //move()
+        //subtract that from steps if they click on a valid hex
     }
     
-    bool near_trash;
-    bool near_gas;
-    bool near_raccoon;
-    bool near_dump;
+    public bool near_trash;
+    public bool near_gas;
+    public bool near_raccoon;
+    public bool near_dump;
     public int steps;
     public bool has_gas;
     public bool has_trash;
