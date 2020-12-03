@@ -40,6 +40,9 @@ public class PlayerController : MonoBehaviour
                 case 6:
                     Debug.Log("trash");
                     break;
+                default:
+                    Debug.Log(tile);
+                    break;
             }
         }
     }

@@ -6,8 +6,16 @@ using System.IO;
 public class HexMap : MonoBehaviour
 {
     // Tile prefab type
-    public GameObject tile;
     float sideLength;
+    float tileHeight;
+
+    // Tile prefabs
+    public GameObject emptyTilePrefab;
+    public GameObject dumpTilePrefab;
+    public GameObject denTilePrefab;
+    public GameObject gasTilePrefab;
+    public GameObject holeTilePrefab;
+    public GameObject trashPiecePrefab;
 
     // Display Parameters
     public float spacing;
@@ -30,35 +38,26 @@ public class HexMap : MonoBehaviour
         instance = this.GetComponent<HexMap>();
 
         List<List<int>> mapRaw = textToLayout();
+
         // Calculate length of one side(same as distance from center point to corner point)
-        sideLength = tile.GetComponent<Renderer>().bounds.size.z / 2 + spacing;
+        sideLength = holeTilePrefab.GetComponent<Renderer>().bounds.size.x / 2 + spacing;
+
+        // Calculate height of tile (to determine y offset of placement)
+        tileHeight = emptyTilePrefab.GetComponent<Renderer>().bounds.size.y;
 
         // Calculate placement values
-        yOffset = (3 * sideLength) / 2;
-        xOffset = Mathf.Sqrt(3) * (sideLength);
+        xOffset = (3 * sideLength) / 2;
+        yOffset = Mathf.Sqrt(3) * (sideLength);
 
         // Spawn Map tiles
         for(int y = 0; y < mapRaw.Count; ++y)
         {
-            float lineOffset = (y % 2) * (xOffset / 2);
             for(int x = 0; x < mapRaw[y].Count; ++x)
             {
                 // none: 0, empty: 1, dump: 2, den: 3, gas: 4, hole: 5, trash: 6
                 if(mapRaw[y][x] != 0) // tile drawn
                 {
-                    GameObject newTile = Instantiate(tile, new Vector3(x * xOffset + lineOffset, 0, y * yOffset), Quaternion.identity);
-                    newTile.transform.parent = this.transform;
-                    newTile.name = "( " + x + " , " + y + " )";
-                    tileMap[new Vector2(x,y)] = newTile;
-
-                    if(mapRaw[y][x] == 6) // empty tile with trash placed
-                    {
-                        newTile.GetComponent<TileInfo>().init(6, null, new Vector2(x,y));
-                    }
-                    else // static or empty tile
-                    {
-                        newTile.GetComponent<TileInfo>().init(mapRaw[y][x], null, new Vector2(x,y));
-                    }
+                    instance.addTile(new Vector2(x, y), mapRaw[y][x]);
                 } // otherwise empty space with no tile
             }
         }
@@ -67,8 +66,8 @@ public class HexMap : MonoBehaviour
     // Returns hex coordinate approximation of world pos
     public Vector2 worldToHex(Vector3 worldPos)
     {
-        int y = (int)Mathf.Floor((worldPos.z + sideLength) / yOffset);
-        int x = (int)Mathf.Floor((worldPos.x) / xOffset);
+        int x = (int)Mathf.Floor((worldPos.x + sideLength) / xOffset);
+        int y = (int)Mathf.Floor((worldPos.z) / yOffset);
 
         return new Vector2(x,y);
     }
@@ -76,7 +75,7 @@ public class HexMap : MonoBehaviour
     // Returns world position of hex coordinate
     public Vector3 hexToWorld(Vector2 hexPos)
     {
-        return new Vector3(hexPos.x * xOffset + (hexPos.y % 2) * (xOffset / 2), 0, hexPos.y * yOffset);
+        return new Vector3(hexPos.x * xOffset, 0, hexPos.y * yOffset + (hexPos.x % 2) * (yOffset / 2));
     }
 
     // Makes 2d list of map with tile types from text file
@@ -152,5 +151,68 @@ public class HexMap : MonoBehaviour
     public int getTileType(Vector2 tile)
     {
         return tileMap[tile].GetComponent<TileInfo>().tileType;
+    }
+
+    // Returns whether or not the tile at the given hex coordinate is traversable (empty tile or not)
+    public bool isTraversable(Vector2 tile)
+    {
+        return tileMap[tile].GetComponent<TileInfo>().tileType == 1 ? true : false;
+    }
+
+    // Adds a tile of given type to given hex grid location
+    void addTile(Vector2 loc, int type)
+    {
+        GameObject newTile;
+        switch(type)
+        {
+            case 2: // Dump
+                newTile = Instantiate(dumpTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                tileMap[loc] = newTile;
+                break;
+            case 3: // Den
+                newTile = Instantiate(denTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                tileMap[loc] = newTile;
+                break;
+            case 4: // Gas
+                newTile = Instantiate(gasTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                tileMap[loc] = newTile;
+                break;
+            case 5: // Hole
+                newTile = Instantiate(holeTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                tileMap[loc] = newTile;
+                break;
+            case 6: // Trash
+                newTile = Instantiate(emptyTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                tileMap[loc] = newTile;
+                GameObject trash = Instantiate(trashPiecePrefab, Vector2.zero, Quaternion.identity);
+                instance.addPiece(loc, trash);
+                newTile.GetComponent<TileInfo>().tileType = 6;
+                break;
+            default: // Empty
+                newTile = Instantiate(emptyTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
+                tileMap[loc] = newTile;
+                break;
+        }
+
+        newTile.GetComponent<TileInfo>().hexCoordinate = loc;
+        newTile.transform.parent = this.transform;
+        newTile.name = "( " + loc.x + " , " + loc.y + " )";
+    }
+
+    // Adds a piece to a given empty tile
+    void addPiece(Vector2 loc, GameObject obj)
+    {
+        Vector3 pos = instance.hexToWorld(loc);
+        pos.y += tileHeight;
+        obj.transform.position = pos;
+        tileMap[loc].GetComponent<TileInfo>().occupant = obj;
+    }
+
+    // Removes a piece from a given empty tile
+    GameObject removePiece(Vector2 loc)
+    {
+        GameObject obj = tileMap[loc].transform.GetComponent<TileInfo>().occupant;
+        tileMap[loc].transform.GetComponent<TileInfo>().occupant = null;
+        return obj;
     }
 }
