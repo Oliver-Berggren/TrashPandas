@@ -28,7 +28,6 @@ public class Human : MonoBehaviour
     public bool has_gas;
     public bool has_trash;
     
-
     //modes
     public bool move_mode;
 
@@ -65,12 +64,6 @@ public class Human : MonoBehaviour
             //drop off
             has_trash = false;
         }
-        end_turn();
-    }
-
-    //human exclusive
-    public void get_gas(){ 
-        has_gas = true;
         end_turn();
     }
 
