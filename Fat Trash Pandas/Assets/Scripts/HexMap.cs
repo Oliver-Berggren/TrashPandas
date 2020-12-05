@@ -98,7 +98,7 @@ public class HexMap : MonoBehaviour
         yOffset = Mathf.Sqrt(3) * (sideLength);
 
         // Calculate map center
-        mapCenter = new Vector3(xOffset * mapRaw[0].Count / 2, 0, yOffset * mapRaw.Count / 2);
+        mapCenter = new Vector3(xOffset * (mapRaw[0].Count - 1) / 2, 0, yOffset * (mapRaw.Count - 1) / 2);
 
         // Spawn Map tiles
         for(int y = 0; y < mapRaw.Count; ++y)
