@@ -12,9 +12,18 @@ public class GameModeManager : MonoBehaviour
 
     void Start()
     {
-        //INITIALISING THE LIST WITH ONE RACCOON AND TWO HUMANS
-        //whoever starts can be decided here or elsewhere
+        
+        //whoever starts can be decided here or elsewhere, players will just need to enter their names
+       //and the controlling method can simply call the following method
 
+       /*public void addPlayer(string name)
+        {
+            players.Add(name);
+        }
+        */
+
+        //INITIALISING THE LIST WITH ONE RACCOON AND TWO HUMANS
+        //Temporary initialisation for testing
         players.Add("R0");
         players.Add("H0");
         players.Add("H1");
@@ -38,7 +47,7 @@ public class GameModeManager : MonoBehaviour
 
     void endMessage(string name)
     {
-        Debug.Log(name);
+        Debug.Log(name+"'s turn has ended");
     }
 
     // Update is called once per frame
