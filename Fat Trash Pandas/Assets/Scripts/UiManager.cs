@@ -158,14 +158,15 @@ public class UiManager : MonoBehaviour
         //it no more available steps, disable button
 
         if (turn == 1){
+            human1.move_mode = true;
             human1.move();
         } else if (turn == 2){
+            human2.move_mode = true;
             human2.move();
         } else {
+            raccoon.move_mode = true;
             raccoon.move();
         }
-
-        updateUI();
     }
 
     public void pickUpButton(){
@@ -211,12 +212,16 @@ public class UiManager : MonoBehaviour
         //go to next player's turn
 
         if (turn < 3) {
-            if (turn == 1)
+            if (turn == 1){
+                human1.move_mode = false;
                 human1.end_turn();
-            else
+            } else {
+                human2.move_mode = false;
                 human2.end_turn();
+            }
             ++turn;
         } else {
+            raccoon.move_mode = false;
             raccoon.end_turn();
             turn = 1;
         }
