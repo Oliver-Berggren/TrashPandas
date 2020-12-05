@@ -7,21 +7,14 @@ public class GameModeManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public Button endTurn;
+    public GameObject ui;
     List<string> players = new List<string>();
     int playerIndex = 0;
+    //initialising the base inventories
+    int den = 0, dump = 0;
 
     void Start()
     {
-        
-        //whoever starts can be decided here or elsewhere, players will just need to enter their names
-       //and the controlling method can simply call the following method
-
-       /*public void addPlayer(string name)
-        {
-            players.Add(name);
-        }
-        */
-
         //INITIALISING THE LIST WITH ONE RACCOON AND TWO HUMANS
         //Temporary initialisation for testing
         players.Add("R0");
@@ -40,9 +33,29 @@ public class GameModeManager : MonoBehaviour
        //update points
 
        //check win conditions
+        if(den == 5) 
+        {   //send end game signals to playercontroller / ui manager
+            ui.GetComponent<UiManager>().endGame("den");
+        }
+        else if(dump == 5)
+        {
+            ui.GetComponent<UiManager>().endGame("dump");
+        }
+        //next player in queue
+        else
+        {
+            //next player in queue: x%y will always be between zero and one less than y
+            playerIndex = (playerIndex + 1) % players.Count;
+            //signal playercontroller to pass controls to the current player
+        }
 
-       //next player in queue: x%y will always be between zero and one less than y
-       playerIndex = (playerIndex + 1) % players.Count;
+    }
+
+    //whoever starts can be decided here or elsewhere, players will just need to enter their names
+    //and the controlling method can simply call the following method
+    void addPlayer(string name)
+    {
+        players.Add(name);
     }
 
     void endMessage(string name)
@@ -50,11 +63,21 @@ public class GameModeManager : MonoBehaviour
         Debug.Log(name+"'s turn has ended");
     }
 
+    void setDen(int n)
+    {   
+        ++den;
+    }
+
+    void setDump(int n)
+    {   
+        ++dump;
+    }
+
     // Update is called once per frame
     void Update()
     {
         
     }
-
+    //TODO: drop off trash button
     
 }

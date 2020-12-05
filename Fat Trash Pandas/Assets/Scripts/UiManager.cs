@@ -244,4 +244,11 @@ public class UiManager : MonoBehaviour
 
         updateUI();
     }
+
+    //TODO: Make the endGame function display a message on the screen to declare the winner
+    public void endGame(string team)
+    {
+        if(team.Equals("den")) Debug.Log("Raccoon Wins");
+        else Debug.Log("Humans Win");
+    }
 }
