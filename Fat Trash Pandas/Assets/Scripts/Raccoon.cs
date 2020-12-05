@@ -25,8 +25,8 @@ public class Raccoon : MonoBehaviour
     public bool near_human;
     public bool near_den;
     public int steps;
-    public bool has_gas;
-    public bool has_trash;
+    public int poop;
+    public int trash;
     
     //modes
     public bool move_mode;
@@ -50,7 +50,6 @@ public class Raccoon : MonoBehaviour
     public void pick_up(){
         if(near_trash){
             //pick up
-            has_trash = true;
             near_trash = false;
         }
         end_turn();
@@ -59,20 +58,13 @@ public class Raccoon : MonoBehaviour
     public void drop_off(){
         if (near_den){
             //drop off
-            has_trash = false;
+            trash = 0;
         }
         end_turn();
     }
 
-    //human exclusive
-    public void get_gas(){ 
-        has_gas = true;
-        end_turn();
-    }
+    public void use_poop(){
 
-    public void use_gas(){
-        this.steps += 2;
-        has_gas = false;
     }
 
     public void scare(){ 
