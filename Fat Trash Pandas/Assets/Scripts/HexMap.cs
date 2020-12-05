@@ -41,6 +41,10 @@ using System.IO;
     List<Vector2> getTunnels()
         Returns the hex coordinates of all tunnels on the map, for use with 
         traveling between tunnels.
+
+    Vector3 getMapCenter()
+        Returns the world position of the center of the map (for camera
+        rotation)
 */
 
 public class HexMap : MonoBehaviour
@@ -74,6 +78,9 @@ public class HexMap : MonoBehaviour
     // Static game map instance
     public static HexMap instance;
 
+    // Misc
+    public Vector3 mapCenter;
+
     void Start()
     {
         instance = this.GetComponent<HexMap>();
@@ -89,6 +96,9 @@ public class HexMap : MonoBehaviour
         // Calculate placement values
         xOffset = (3 * sideLength) / 2;
         yOffset = Mathf.Sqrt(3) * (sideLength);
+
+        // Calculate map center
+        mapCenter = new Vector3(xOffset * mapRaw[0].Count / 2, 0, yOffset * mapRaw.Count / 2);
 
         // Spawn Map tiles
         for(int y = 0; y < mapRaw.Count; ++y)
@@ -262,5 +272,11 @@ public class HexMap : MonoBehaviour
     public List<Vector2> getTunnels()
     {
         return tunnels;
+    }
+
+    // Returns the world location of center of map
+    public Vector3 getMapCenter()
+    {
+        return mapCenter;
     }
 }
