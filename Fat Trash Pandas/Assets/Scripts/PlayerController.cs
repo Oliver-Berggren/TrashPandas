@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         RaycastHit tileHit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -45,5 +46,6 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
+        */
     }
 }
