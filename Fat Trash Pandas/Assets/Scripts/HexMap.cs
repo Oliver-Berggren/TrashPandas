@@ -3,6 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+/*
+    Vector2 worldToHex(Vector3 worldPos)
+        Takes a world position, flattens it to the xz plane, and returns
+        the closest hex's coordinate.
+
+    Vector3 hexToWorld(Vector2 hexPos)
+        Takes a hex tile coordinate and returns the world position of the
+        center of the hex, with y = 0.
+
+    List<Vector2> getNeighbors(Vector2 loc)
+        Returns the hex coordinates of the 6 or less tiles touching the
+        tile at the given hex coordinate. Returns all valid tile types,
+        whether traversable or not.
+    
+    int getTileType(Vector2 tile)
+        Returns the int type of the tile at the given hex coordinate.
+        Note - empty tiles with a player pawn on them will return empty type.
+    
+    bool isTraversable(Vector2 tile)
+        Returns bool of whether tile at given hex coordinate is traversable
+        or not. Note - empty tiles with a player pawn on them will return
+        false.
+    
+    void addPiece(Vector2 loc, GameObject obj)
+        Adds the given GameObject to the tile at the specified hex coordinate
+        by moving the object to the correct place and assigning it as
+        occupant of the tile.
+
+    GameObject removePiece(Vector2 loc)
+        Sets occupant of tile at specified hex coordinate to null and returns
+        reference to the GameObject that was removed from the tile. Note - 
+        does not move the GameObject, and will return null and do nothing
+        if tile has no occupant. Can be nested with addPiece in order to move
+        player pawn from one tile to another immediately.
+
+    List<Vector2> getTunnels()
+        Returns the hex coordinates of all tunnels on the map, for use with 
+        traveling between tunnels.
+*/
+
 public class HexMap : MonoBehaviour
 {
     // Tile prefab type
@@ -24,8 +64,9 @@ public class HexMap : MonoBehaviour
     float xOffset; 
     float yOffset;
 
-    // Map Container
+    // Map Containers
     Dictionary<Vector2, GameObject> tileMap = new Dictionary<Vector2, GameObject>();
+    List<Vector2> tunnels = new List<Vector2>();
 
     // Map layout in text file form
     public TextAsset mapLayout;
@@ -105,13 +146,13 @@ public class HexMap : MonoBehaviour
     }
 
     // Returns tile at given hex coordinate
-    public GameObject getTile(Vector2 loc)
+    GameObject getTile(Vector2 loc)
     {
         return tileMap[loc];
     }
 
     // Returns list of all neighboring tiles
-    List<Vector2> getNeighbors(Vector2 loc)
+    public List<Vector2> getNeighbors(Vector2 loc)
     {
         List<Vector2> neighbors = new List<Vector2>();
         Vector2 possibleNeighbor;
@@ -156,7 +197,7 @@ public class HexMap : MonoBehaviour
     // Returns whether or not the tile at the given hex coordinate is traversable (empty tile or not)
     public bool isTraversable(Vector2 tile)
     {
-        return tileMap[tile].GetComponent<TileInfo>().tileType == 1 ? true : false;
+        return tileMap[tile].GetComponent<TileInfo>().occupant == null ? true : false;
     }
 
     // Adds a tile of given type to given hex grid location
@@ -180,6 +221,7 @@ public class HexMap : MonoBehaviour
             case 5: // Hole
                 newTile = Instantiate(holeTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
                 tileMap[loc] = newTile;
+                tunnels.Add(loc);
                 break;
             case 6: // Trash
                 newTile = Instantiate(emptyTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
@@ -200,7 +242,7 @@ public class HexMap : MonoBehaviour
     }
 
     // Adds a piece to a given empty tile
-    void addPiece(Vector2 loc, GameObject obj)
+    public void addPiece(Vector2 loc, GameObject obj)
     {
         Vector3 pos = instance.hexToWorld(loc);
         pos.y += tileHeight;
@@ -209,10 +251,16 @@ public class HexMap : MonoBehaviour
     }
 
     // Removes a piece from a given empty tile
-    GameObject removePiece(Vector2 loc)
+    public GameObject removePiece(Vector2 loc)
     {
         GameObject obj = tileMap[loc].transform.GetComponent<TileInfo>().occupant;
         tileMap[loc].transform.GetComponent<TileInfo>().occupant = null;
         return obj;
+    }
+
+    // Returns the locations of all tunnels
+    public List<Vector2> getTunnels()
+    {
+        return tunnels;
     }
 }
