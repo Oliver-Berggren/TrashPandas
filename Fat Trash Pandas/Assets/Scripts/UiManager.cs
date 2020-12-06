@@ -11,7 +11,8 @@ public class UiManager : MonoBehaviour
     Human human2;
     public GameObject player3;
     Raccoon raccoon;
-    public GameObject manager;
+    public GameObject man;
+    GameModeManager manager;
 
     public GameObject gas;
     Button gasButton;
@@ -26,8 +27,6 @@ public class UiManager : MonoBehaviour
     public Text inventory;
     public Text score;
 
-    public int turn;
-
     void Start() {
         gasButton = gas.GetComponent<Button>();
         poopButton = poop.GetComponent<Button>();
@@ -36,6 +35,8 @@ public class UiManager : MonoBehaviour
         human2 = player2.GetComponent<Human>();
 
         raccoon = player3.GetComponent<Raccoon>();
+
+        manager = man.GetComponent<GameModeManager>();
 
         updateUI();
     }
@@ -46,15 +47,15 @@ public class UiManager : MonoBehaviour
         //update the buttons if they need to be disabled/enabled
 
         //score
-        score.text = "SCORE \n Humans: \n Raccoon: ";
+        score.text = "SCORE \n Humans: " + manager.dump + "\n Raccoon: " + manager.den;
 
         //human turn
-        if (turn < 3){
+        if (manager.playerIndex < 2){
             //human vs racccoon action
             gas.SetActive(true);
             poop.SetActive(false);
 
-            if (turn == 1){
+            if (manager.playerIndex == 0){
                 //text
                 displayTurn.text = "HUMAN 1 TURN";
                 numSteps.text = "Steps: " + human1.steps;
@@ -157,15 +158,16 @@ public class UiManager : MonoBehaviour
         //if available steps, enable button
         //it no more available steps, disable button
 
-        if (turn == 1){
+        if (manager.playerIndex == 0){
+            human1.move_mode = true;
             human1.move();
-        } else if (turn == 2){
+        } else if (manager.playerIndex == 1){
+            human2.move_mode = true;
             human2.move();
         } else {
+            raccoon.move_mode = true;
             raccoon.move();
         }
-
-        updateUI();
     }
 
     public void pickUpButton(){
@@ -175,9 +177,9 @@ public class UiManager : MonoBehaviour
         //pick up trash near them
         //disable button
 
-        if (turn == 1){
+        if (manager.playerIndex == 0){
             human1.pick_up();
-        } else if (turn == 2){
+        } else if (manager.playerIndex == 1){
             human2.pick_up();
         } else {
             raccoon.pick_up();
@@ -194,9 +196,9 @@ public class UiManager : MonoBehaviour
         //drop off all trash
         //disable button
 
-        if (turn == 1){
+        if (manager.playerIndex == 0){
             human1.drop_off();
-        } else if (turn == 2){
+        } else if (manager.playerIndex == 1){
             human2.drop_off();
         } else {
             raccoon.drop_off();
@@ -210,15 +212,17 @@ public class UiManager : MonoBehaviour
         //end their turn
         //go to next player's turn
 
-        if (turn < 3) {
-            if (turn == 1)
+        if (manager.playerIndex < 2) {
+            if (manager.playerIndex == 0){
+                human1.move_mode = false;
                 human1.end_turn();
-            else
+            } else {
+                human2.move_mode = false;
                 human2.end_turn();
-            ++turn;
+            }
         } else {
+            raccoon.move_mode = false;
             raccoon.end_turn();
-            turn = 1;
         }
 
         updateUI();
@@ -234,14 +238,32 @@ public class UiManager : MonoBehaviour
         //has poop
         //enable button, otherwisedisable
 
-        if (turn == 1){
+        if (manager.playerIndex == 0){
             human1.use_gas();
-        } else if (turn == 2){
+        } else if (manager.playerIndex == 1){
             human2.use_gas();
         } else {
             raccoon.use_poop();
         }
 
         updateUI();
+    }
+
+    //TODO: Make the endGame function display a message on the screen to declare the winner
+    public void endGame(string team)
+    {
+        poopButton.interactable = false;
+        gasButton.interactable = false;
+        pickUp.interactable = false;
+        dropOff.interactable = false;
+        move.interactable = false;
+
+        if(team.Equals("den")) {
+            displayTurn.text = "Raccoon Wins";
+            Debug.Log("Raccoon Wins");
+        } else {
+            displayTurn.text = "Humans Wins";
+            Debug.Log("Humans Win");
+        }
     }
 }
