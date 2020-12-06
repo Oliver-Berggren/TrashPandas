@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // Control variables
+    public float camRotSpeed; // Speed of camera rotation
+    public GameObject cameraAnchor; // Anchor object for camera rotation
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        cameraAnchor.transform.position = HexMap.instance.getMapCenter();
+        Camera.main.transform.parent = cameraAnchor.transform;
     }
 
     // Update is called once per frame
@@ -47,5 +52,12 @@ public class PlayerController : MonoBehaviour
             }
         }
         */
+
+        // Rotate camera if right mouse down
+        if (Input.GetMouseButton(1))
+        {
+            Quaternion turnAngle = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * camRotSpeed, Vector3.up);
+            cameraAnchor.transform.Rotate(0, Input.GetAxis("Mouse X") * camRotSpeed, 0);
+        }
     }
 }
