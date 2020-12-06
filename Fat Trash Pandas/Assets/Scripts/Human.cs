@@ -36,6 +36,10 @@ public class Human : MonoBehaviour
         //     //move somewhere
         // }
         // steps -= 1;
+
+        //call highlighting message here
+
+        
     }
 
     public void end_turn(){ 

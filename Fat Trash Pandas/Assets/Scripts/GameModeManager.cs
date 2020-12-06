@@ -9,17 +9,17 @@ public class GameModeManager : MonoBehaviour
     public Button endTurn;
     public GameObject ui;
     List<string> players = new List<string>();
-    int playerIndex = 0;
+    public int playerIndex = 0;
     //initialising the base inventories
-    int den = 0, dump = 0;
+    public int den = 0, dump = 0;
 
     void Start()
     {
         //INITIALISING THE LIST WITH ONE RACCOON AND TWO HUMANS
         //Temporary initialisation for testing
-        players.Add("R0");
         players.Add("H0");
         players.Add("H1");
+        players.Add("R0");
 
         //logging before end is triggered
         endTurn.onClick.AddListener(delegate {endMessage(players[playerIndex]); });
@@ -63,12 +63,12 @@ public class GameModeManager : MonoBehaviour
         Debug.Log(name+"'s turn has ended");
     }
 
-    void setDen(int n)
+    void setDen()
     {   
         ++den;
     }
 
-    void setDump(int n)
+    void setDump()
     {   
         ++dump;
     }
