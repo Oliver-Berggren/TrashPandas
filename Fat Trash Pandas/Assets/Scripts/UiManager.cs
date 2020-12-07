@@ -62,9 +62,9 @@ public class UiManager : MonoBehaviour
                 inventory.text = "Inventory: ";
                 if (human1.has_gas)
                     inventory.text += "Gas ";
-                    if (human1.has_trash)
+                    if (human1.trash > 0)
                         inventory.text += "and Trash";
-                else if (human1.has_trash)
+                else if (human1.trash > 0)
                     inventory.text += "Trash";
 
                 //buttons
@@ -72,14 +72,14 @@ public class UiManager : MonoBehaviour
                 gasButton.interactable = human1.has_gas;
 
                 //pick up trash
-                if (human1.near_trash && human1.has_trash){
+                if (human1.near_trash && human1.trash > 0){
                     pickUp.interactable = true;
                 } else {
                     pickUp.interactable = false;
                 }
                 
                 //drop off trash
-                if (human1.near_dump && human1.has_trash) {
+                if (human1.near_dump && human1.trash > 0) {
                     dropOff.interactable = true;
                 } else {
                     dropOff.interactable = false;
@@ -91,9 +91,9 @@ public class UiManager : MonoBehaviour
                 inventory.text = "Inventory: ";
                 if (human2.has_gas)
                     inventory.text += "Gas ";
-                    if (human2.has_trash)
+                    if (human2.trash > 0)
                         inventory.text += "and Trash";
-                else if (human2.has_trash)
+                else if (human2.trash > 0)
                     inventory.text += "Trash";
 
                 //buttons
@@ -101,14 +101,14 @@ public class UiManager : MonoBehaviour
                 gasButton.interactable = human2.has_gas;
 
                 //pick up trash
-                if (human2.near_trash && human2.has_trash){
+                if (human2.near_trash && human2.trash > 0){
                     pickUp.interactable = true;
                 } else {
                     pickUp.interactable = false;
                 }
                 
                 //drop off trash
-                if (human2.near_dump && human2.has_trash) {
+                if (human2.near_dump && human2.trash > 0) {
                     dropOff.interactable = true;
                 } else {
                     dropOff.interactable = false;
