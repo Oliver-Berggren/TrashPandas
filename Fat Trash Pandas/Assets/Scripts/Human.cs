@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Human : MonoBehaviour
+public class Human : PlayerClass
 {
     // Start is called before the first frame update
     void Start()
@@ -20,18 +20,12 @@ public class Human : MonoBehaviour
         //subtract that from steps if they click on a valid hex
     }
     
-    public bool near_trash;
     public bool near_gas;
     public bool near_raccoon;
     public bool near_dump;
-    public int steps;
     public bool has_gas;
-    public bool has_trash;
-    
-    //modes
-    public bool move_mode;
 
-    public void move(){
+    // public void move(){
         // if (move_mode){
         //     //move somewhere
         // }
@@ -40,46 +34,49 @@ public class Human : MonoBehaviour
         //call highlighting message here
 
         
-    }
+    // }
 
-    public void end_turn(){ 
-        move_mode = false;
-        if (near_gas){
-            has_gas = true;
-        }
-        if (near_raccoon){
-            scare();
-        }
-        //switch game mode
-        steps = 2;  //step reset
-    }
+    // public void end_turn(){ 
+    //     move_mode = false;
+    //     if (near_gas){
+    //         has_gas = true;
+    //     }
+    //     if (near_raccoon){
+    //         scare();
+    //     }
+    //     //switch game mode
+    //     steps = 2;  //step reset
+    // }
 
-    public void pick_up(){
-        if(near_trash){
-            //pick up
-            has_trash = true;
-            near_trash = false;
-        }
-        end_turn();
-    }
+    // public void pick_up(){
+    //     if(near_trash && trash == 0){
+    //         //pick up
+    //         trash = 1;
+    //         near_trash = false;
+    //     }
+    //     end_turn();
+    // }
 
-    public void drop_off(){
-        if (near_dump){
-            //drop off
-            has_trash = false;
-        }
-        end_turn();
-    }
+    // public void drop_off(){
+    //     if (near_dump){
+    //         //drop off
+    //         trash = 0;
+    //     }
+    //     end_turn();
+    // }
 
     public void use_gas(){
         this.steps += 2;
         has_gas = false;
     }
 
-    public void scare(){ 
-        //make raccoon have a status lose_trash??
+    // public void scare(){ 
+    //     //make raccoon have a status lose_trash??
+    // }
+
+
+    override public void near_dropoff()
+    {
+
     }
-
-
-
 }
