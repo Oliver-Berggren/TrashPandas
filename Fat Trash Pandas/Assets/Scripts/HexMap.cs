@@ -17,7 +17,7 @@ using System.IO;
         tile at the given hex coordinate. Returns all valid tile types,
         whether traversable or not.
     
-    int getTileType(Vector2 tile)
+    int getTileType(Vector2 tile) // none: 0, empty: 1, dump: 2, den: 3, gas: 4, hole: 5, trash: 6
         Returns the int type of the tile at the given hex coordinate.
         Note - empty tiles with a player pawn on them will return empty type.
     

@@ -15,16 +15,11 @@ abstract public class PlayerClass : MonoBehaviour
     // modes
     public bool move_mode;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void move(){
+        // if (move_mode){
+        //     //move somewhere
+        // }
+        // steps -= 1;
     }
 
     // Modes

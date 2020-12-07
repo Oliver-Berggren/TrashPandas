@@ -4,33 +4,28 @@ using UnityEngine;
 
 public class Raccoon : PlayerClass
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
-    void Update()
-    {
+    // void Update()
+    // {
         //if in move mode,
         //highlight moveable hexes
         //do the stuff in the playercontroller.cs thing
         //move()
         //subtract that from steps if they click on a valid hex
-    }
+    // }
 
     public bool near_tunnel;
     public bool near_human;
     public bool near_den;
     public int poop;
 
-    public void move(){
+    // public void move(){
         // if (move_mode){
         //     //move somewhere
         // }
         // steps -= 1;
-    }
+    // }
 
     public void use_poop(){
 

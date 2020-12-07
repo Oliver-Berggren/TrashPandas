@@ -25,7 +25,7 @@ public class Human : PlayerClass
     public bool near_dump;
     public bool has_gas;
 
-    public void move(){
+    // public void move(){
         // if (move_mode){
         //     //move somewhere
         // }
@@ -34,7 +34,7 @@ public class Human : PlayerClass
         //call highlighting message here
 
         
-    }
+    // }
 
     // public void end_turn(){ 
     //     move_mode = false;
