@@ -169,30 +169,30 @@ public class HexMap : MonoBehaviour
         List<Vector2> neighbors = new List<Vector2>();
         Vector2 possibleNeighbor;
 
-        for(int y = (int)loc.y - 1; y <= loc.y + 1; y += 2) // two above and two below
+        for(int x = (int)loc.x - 1; x <= loc.x + 1; x += 2) // two above and two below
         {
-            possibleNeighbor = new Vector2(loc.x,y);
+            possibleNeighbor = new Vector2(x,loc.y);
             if(tileMap.ContainsKey(possibleNeighbor))
             {
                 neighbors.Add(possibleNeighbor);
             }
 
-            possibleNeighbor = new Vector2(loc.x - 1 + ((loc.y % 2) * 2),y);
+            possibleNeighbor = new Vector2(x,loc.y - 1 + ((loc.x % 2) * 2));
             if(tileMap.ContainsKey(possibleNeighbor))
             {
                 neighbors.Add(possibleNeighbor);
             }
         }
 
-        // two on either side
+        // one above and one below
         possibleNeighbor = loc;
-        possibleNeighbor.x += 1;
+        possibleNeighbor.y += 1;
         if(tileMap.ContainsKey(possibleNeighbor))
         {
             neighbors.Add(possibleNeighbor);
         }
 
-        possibleNeighbor.x -= 2;
+        possibleNeighbor.y -= 2;
         if(tileMap.ContainsKey(possibleNeighbor))
         {
             neighbors.Add(possibleNeighbor);
