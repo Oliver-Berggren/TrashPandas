@@ -4,60 +4,38 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Control variables
-    public float camRotSpeed; // Speed of camera rotation
-    public GameObject cameraAnchor; // Anchor object for camera rotation
+    // Singleton reference
+    public static PlayerController instance;
+
+    // Action to be called with result (set by caller when listen enabled)
+    System.Action<Vector2> callAction;
 
     // Start is called before the first frame update
     void Start()
     {
-        cameraAnchor.transform.position = HexMap.instance.getMapCenter();
-        Camera.main.transform.parent = cameraAnchor.transform;
+        instance = this.GetComponent<PlayerController>();
+        this.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
-        RaycastHit tileHit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if(Physics.Raycast(ray, out tileHit))
+        if(Input.GetMouseButtonDown(0))
         {
-            Vector2 tile = HexMap.instance.worldToHex(tileHit.transform.position);
-            int type = HexMap.instance.getTileType(tile);
-            switch(type) // none: 0, empty: 1, dump: 2, den: 3, gas: 4, hole: 5, trash: 6
+            RaycastHit tileHit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if(Physics.Raycast(ray, out tileHit))
             {
-                case 1:
-                    Debug.Log("empty");
-                    break;
-                case 2:
-                    Debug.Log("dump");
-                    break;
-                case 3:
-                    Debug.Log("den");
-                    break;
-                case 4:
-                    Debug.Log("gas");
-                    break;
-                case 5:
-                    Debug.Log("hole");
-                    break;
-                case 6:
-                    Debug.Log("trash");
-                    break;
-                default:
-                    Debug.Log(tile);
-                    break;
+                callAction(HexMap.instance.worldToHex(tileHit.transform.position));
+                this.enabled = false;
             }
         }
-        */
+    }
 
-        // Rotate camera if right mouse down
-        if (Input.GetMouseButton(1))
-        {
-            Quaternion turnAngle = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * camRotSpeed, Vector3.up);
-            cameraAnchor.transform.Rotate(0, Input.GetAxis("Mouse X") * camRotSpeed, 0);
-        }
+    // Waits for user to click on tile, then calls action function with hex coordinate of tile clicked
+    public void startListening(System.Action<Vector2> action)
+    {
+        callAction = action;
+        this.enabled = true;
     }
 }

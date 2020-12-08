@@ -11,15 +11,15 @@ abstract public class PlayerClass : MonoBehaviour
     public int steps;
     public int trash;
     public int maxNumSteps;
+    
+    public Vector2 hexLocation;
 
     // modes
     public bool move_mode;
 
     public void move(){
-        // if (move_mode){
-        //     //move somewhere
-        // }
-        // steps -= 1;
+        // TODO: Get possible move tiles with number of steps associated
+        PlayerController.instance.startListening(tryMove);
     }
 
     // Modes
@@ -46,6 +46,13 @@ abstract public class PlayerClass : MonoBehaviour
         //     trash = 0;
         // }
         end_turn();
+    }
+
+    void tryMove(Vector2 loc)
+    {
+        // TODO: add check for valid move. if not valid, re-call listen
+        HexMap.instance.removePiece(hexLocation);
+        HexMap.instance.addPiece(loc, gameObject);
     }
 
     abstract public void near_dropoff();

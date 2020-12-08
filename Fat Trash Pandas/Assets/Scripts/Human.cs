@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Human : PlayerClass
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+        hexLocation = HexMap.instance.getDump();
     }
 
     // Update is called once per frame
