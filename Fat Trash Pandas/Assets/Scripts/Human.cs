@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Human : PlayerClass
 {
+    public GameObject trashPiecePrefab;
+
     void Start()
     {
         hexLocation = HexMap.instance.getDump();
@@ -34,35 +36,33 @@ public class Human : PlayerClass
     }
 
     public void remove_poop(List<Vector2> neighbors){
-        // foreach (Vector2 pos in neighbors) {
-        //     int type = instance.getTileType(pos); (get the tile type)
-        //     if (type == 7){
-        //         instance.removePiece(pos) (remove the poop gamepiece)
-        //         change the tile type to 1 (empty)
-        //     }
-        // }
+        foreach (Vector2 pos in neighbors) {
+            int type = HexMap.instance.getTileType(pos);
+            if (type == 7){
+                HexMap.instance.removePiece(pos);
+                //HexMap.instance.tileMap[pos].GetComponent<TileInfo>().tileType = 1;
+            }
+        }
+
+        end_turn();
     }
 
     public void scare_raccoon(Raccoon rac, List<Vector2> neighbors){
-        // if (rac.trash > 0){
-        //     
-        //
-        
-            // List<Vector2> empty = new List<Vector2>();
-            // foreach (Vector2 pos in neighbors){
-            //     int type = instance.getTileType(pos);
-            //     if (type == 1){
-            //         empty.Add(pos);
-            //     }
-            // }
-            // Random rnd = new Random();
-            // int index = rnd.Next(empty.Count);
+        if (rac.trash > 0){
+            List<Vector2> empty = new List<Vector2>();
+            foreach (Vector2 pos in neighbors){
+                int type = HexMap.instance.getTileType(pos);
+                if (type == 1){
+                    empty.Add(pos);
+                }
+            }
 
-            //instantiate new trash game obj
-            //GameObject trash = Instantiate(trashPiecePrefab, Vector2.zero, Quaternion.identity);
-            //instance.addPiece(empty[index], trash);
-            //newTile.GetComponent<TileInfo>().tileType = 6;
-        // }
+            int index = Random.Range(0, empty.Count);
+
+            GameObject trash = Instantiate(trashPiecePrefab, Vector2.zero, Quaternion.identity);
+            HexMap.instance.addPiece(empty[index], trash);
+            //HexMap.instance.tileMap[empty[index]].GetComponent<TileInfo>().tileType = 6;
+        }
     }
 
 

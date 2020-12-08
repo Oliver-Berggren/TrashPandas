@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Raccoon : PlayerClass
 {
+    public GameObject poopPrefab;
+
     void Start()
     {
         hexLocation = HexMap.instance.getDen();
@@ -24,25 +26,25 @@ public class Raccoon : PlayerClass
     public bool near_den;
     public int poop;
 
-    public void use_poop(List<Vector2> neighbors){
-        // if (poop > 0){
-        //     List<Vector2> empty = new List<Vector2>();
+    public void use_poop(){
+        if (poop > 0){
+            List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
+            List<Vector2> empty = new List<Vector2>();
 
-        //     foreach (Vector2 pos in neighbors){
-        //         int type = instance.getTileType(pos);
+            foreach (Vector2 pos in neighbors){
+                int type = instance.getTileType(pos);
 
-        //         if (type == 1){
-        //             empty.Add(pos);
-        //         }
-        //     }
+                if (type == 1){
+                    empty.Add(pos);
+                }
+            }
 
-            // instantiate new poop game obj
-            // GameObject poop = Instantiate(poopPrefab, Vector2.zero, Quaternion.identity);
-            // instance.addPiece(empty[index], poop);
-            // newTile.GetComponent<TileInfo>().tileType = 7;
+            GameObject poop = Instantiate(poopPrefab, Vector2.zero, Quaternion.identity);
+            HexMap.instance.addPiece(empty[index], poop);
+            //HexMap.instance.tileMap[pos].GetComponent<TileInfo>().tileType = 7;
 
-        //     --poop;
-        // }
+            --poop;
+        }
     }
 
     override public void near_dropoff()
