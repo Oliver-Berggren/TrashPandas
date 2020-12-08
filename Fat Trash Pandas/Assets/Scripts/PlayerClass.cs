@@ -33,6 +33,7 @@ abstract public class PlayerClass : MonoBehaviour
         //step reset
 
         PlayerController.instance.stopListening();
+        steps = maxNumSteps;
     }
 
     public void pick_up(){

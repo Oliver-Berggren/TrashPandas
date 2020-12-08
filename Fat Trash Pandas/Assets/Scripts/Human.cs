@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Human : PlayerClass
 {
+    public GameObject trashPiecePrefab;
+
     void Start()
     {
         hexLocation = HexMap.instance.getDump();
@@ -24,54 +26,44 @@ public class Human : PlayerClass
     public bool near_dump;
     public bool has_gas;
 
-    // public void move(){
-        // if (move_mode){
-        //     //move somewhere
-        // }
-        // steps -= 1;
-
-        //call highlighting message here
-
-        
-    // }
-
-    // public void end_turn(){ 
-    //     move_mode = false;
-    //     if (near_gas){
-    //         has_gas = true;
-    //     }
-    //     if (near_raccoon){
-    //         scare();
-    //     }
-    //     //switch game mode
-    //     steps = 2;  //step reset
-    // }
-
-    // public void pick_up(){
-    //     if(near_trash && trash == 0){
-    //         //pick up
-    //         trash = 1;
-    //         near_trash = false;
-    //     }
-    //     end_turn();
-    // }
-
-    // public void drop_off(){
-    //     if (near_dump){
-    //         //drop off
-    //         trash = 0;
-    //     }
-    //     end_turn();
-    // }
-
     public void use_gas(){
         this.steps += 2;
         has_gas = false;
     }
 
-    // public void scare(){ 
-    //     //make raccoon have a status lose_trash??
-    // }
+    public void get_gas(){
+        has_gas = true;
+    }
+
+    public void remove_poop(List<Vector2> neighbors){
+        foreach (Vector2 pos in neighbors) {
+            int type = HexMap.instance.getTileType(pos);
+            if (type == 7){
+                HexMap.instance.removePiece(pos);
+                //HexMap.instance.tileMap[pos].GetComponent<TileInfo>().tileType = 1;
+            }
+        }
+
+        end_turn();
+    }
+
+    public void scare_raccoon(Raccoon rac, List<Vector2> neighbors){
+        if (rac.trash > 0){
+            List<Vector2> empty = new List<Vector2>();
+            foreach (Vector2 pos in neighbors){
+                int type = HexMap.instance.getTileType(pos);
+                if (type == 1){
+                    empty.Add(pos);
+                }
+            }
+
+            int index = Random.Range(0, empty.Count);
+
+            GameObject trash = Instantiate(trashPiecePrefab, Vector2.zero, Quaternion.identity);
+            HexMap.instance.addPiece(empty[index], trash);
+            //HexMap.instance.tileMap[empty[index]].GetComponent<TileInfo>().tileType = 6;
+        }
+    }
 
 
     override public void near_dropoff()
