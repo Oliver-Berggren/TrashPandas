@@ -107,7 +107,7 @@ public class HexMap : MonoBehaviour
         {
             for(int x = 0; x < mapRaw[y].Count; ++x)
             {
-                // none: 0, empty: 1, dump: 2, den: 3, gas: 4, hole: 5, trash: 6
+                // none: 0, empty: 1, dump: 2, den: 3, gas: 4, hole: 5, trash: 6, poop: 7
                 if(mapRaw[y][x] != 0) // tile drawn
                 {
                     instance.addTile(new Vector2(x, y), mapRaw[y][x]);

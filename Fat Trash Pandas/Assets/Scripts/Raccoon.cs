@@ -10,33 +10,39 @@ public class Raccoon : PlayerClass
     }
 
     // Update is called once per frame
-    // void Update()
-    // {
+    void Update()
+    {
         //if in move mode,
         //highlight moveable hexes
         //do the stuff in the playercontroller.cs thing
         //move()
         //subtract that from steps if they click on a valid hex
-    // }
+    }
 
     public bool near_tunnel;
     public bool near_human;
     public bool near_den;
     public int poop;
 
-    // public void move(){
-        // if (move_mode){
-        //     //move somewhere
+    public void use_poop(List<Vector2> neighbors){
+        // if (poop > 0){
+        //     List<Vector2> empty = new List<Vector2>();
+
+        //     foreach (Vector2 pos in neighbors){
+        //         int type = instance.getTileType(pos);
+
+        //         if (type == 1){
+        //             empty.Add(pos);
+        //         }
+        //     }
+
+            // instantiate new poop game obj
+            // GameObject poop = Instantiate(poopPrefab, Vector2.zero, Quaternion.identity);
+            // instance.addPiece(empty[index], poop);
+            // newTile.GetComponent<TileInfo>().tileType = 7;
+
+        //     --poop;
         // }
-        // steps -= 1;
-    // }
-
-    public void use_poop(){
-
-    }
-
-    public void scare(){ 
-        //make raccoon have a status lose_trash??
     }
 
     override public void near_dropoff()

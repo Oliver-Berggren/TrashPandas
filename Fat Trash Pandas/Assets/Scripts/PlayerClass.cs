@@ -30,6 +30,7 @@ abstract public class PlayerClass : MonoBehaviour
         // }
         //switch game mode
         //step reset
+        steps = maxNumSteps;
     }
 
     public void pick_up(){
