@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Raccoon : PlayerClass
 {
+    void Start()
+    {
+        hexLocation = HexMap.instance.getDen();
+    }
 
     // Update is called once per frame
     // void Update()

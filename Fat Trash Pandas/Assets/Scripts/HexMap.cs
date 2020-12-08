@@ -71,6 +71,8 @@ public class HexMap : MonoBehaviour
     // Map Containers
     Dictionary<Vector2, GameObject> tileMap = new Dictionary<Vector2, GameObject>();
     List<Vector2> tunnels = new List<Vector2>();
+    Vector2 den;
+    Vector2 dump;
 
     // Map layout in text file form
     public TextAsset mapLayout;
@@ -81,7 +83,7 @@ public class HexMap : MonoBehaviour
     // Misc
     public Vector3 mapCenter;
 
-    void Start()
+    void Awake()
     {
         instance = this.GetComponent<HexMap>();
 
@@ -219,10 +221,12 @@ public class HexMap : MonoBehaviour
             case 2: // Dump
                 newTile = Instantiate(dumpTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
                 tileMap[loc] = newTile;
+                dump = loc;
                 break;
             case 3: // Den
                 newTile = Instantiate(denTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
                 tileMap[loc] = newTile;
+                den = loc;
                 break;
             case 4: // Gas
                 newTile = Instantiate(gasTilePrefab, instance.hexToWorld(loc), Quaternion.identity);
@@ -263,15 +267,31 @@ public class HexMap : MonoBehaviour
     // Removes a piece from a given empty tile
     public GameObject removePiece(Vector2 loc)
     {
-        GameObject obj = tileMap[loc].transform.GetComponent<TileInfo>().occupant;
-        tileMap[loc].transform.GetComponent<TileInfo>().occupant = null;
-        return obj;
+        if(tileMap.ContainsKey(loc))
+        {
+            GameObject obj = tileMap[loc].transform.GetComponent<TileInfo>().occupant;
+            tileMap[loc].transform.GetComponent<TileInfo>().occupant = null;
+            return obj;
+        }
+        return null;
     }
 
     // Returns the locations of all tunnels
     public List<Vector2> getTunnels()
     {
         return tunnels;
+    }
+
+    // Returns the location of den
+    public Vector2 getDen()
+    {
+        return den;
+    }
+
+    // Returns the location of den
+    public Vector2 getDump()
+    {
+        return dump;
     }
 
     // Returns the world location of center of map
