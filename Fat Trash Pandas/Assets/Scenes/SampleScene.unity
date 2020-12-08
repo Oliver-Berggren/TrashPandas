@@ -270,13 +270,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   near_trash: 0
+  near_dropOff: 0
+  near_Opponent: 0
+  steps: 2
+  trash: 0
+  maxNumSteps: 0
+  move_mode: 0
   near_gas: 0
   near_raccoon: 0
   near_dump: 0
-  steps: 2
   has_gas: 1
-  has_trash: 0
-  move_mode: 0
 --- !u!1 &195379005
 GameObject:
   m_ObjectHideFlags: 0
@@ -1637,13 +1640,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   near_trash: 0
+  near_dropOff: 0
+  near_Opponent: 0
+  steps: 5
+  trash: 0
+  maxNumSteps: 0
+  move_mode: 0
   near_tunnel: 0
   near_human: 0
   near_den: 0
-  steps: 5
   poop: 3
-  trash: 0
-  move_mode: 0
 --- !u!1 &1311037660
 GameObject:
   m_ObjectHideFlags: 0
@@ -2223,13 +2229,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   near_trash: 0
+  near_dropOff: 0
+  near_Opponent: 0
+  steps: 2
+  trash: 0
+  maxNumSteps: 0
+  move_mode: 0
   near_gas: 0
   near_raccoon: 0
   near_dump: 0
-  steps: 2
   has_gas: 1
-  has_trash: 0
-  move_mode: 0
 --- !u!1 &1959775225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2439,6 +2448,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 635731563}
+        m_MethodName: end
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1959775230}
         m_MethodName: endTurnButton
         m_Mode: 1
