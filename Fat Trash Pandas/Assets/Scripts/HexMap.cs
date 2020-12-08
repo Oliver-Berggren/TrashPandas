@@ -206,6 +206,11 @@ public class HexMap : MonoBehaviour
         return tileMap[tile].GetComponent<TileInfo>().tileType;
     }
 
+    public void setTileType(Vector2 tile, int val)
+    {
+        tileMap[tile].GetComponent<TileInfo>().tileType = val;
+    }
+
     // Returns whether or not the tile at the given hex coordinate is traversable (empty tile or not)
     public bool isTraversable(Vector2 tile)
     {
@@ -299,4 +304,25 @@ public class HexMap : MonoBehaviour
     {
         return mapCenter;
     }
+
+    // public Dictionary<Vector2, int> getPossibleMoves(Vector2 loc, int maxMoves, bool isRaccoon)
+    // {
+    //     Dictionary<Vector2, int> possibleMoves = new Dictionary<Vector2, int>();
+    //     Dictionary<Vector2, int> queue = new Dictionary<Vector2, int>();
+    //     queue.Add(loc, 0);
+// 
+    //     while(queue.Count > 0)
+    //     {
+    //         Vector2 visit = queue.;
+    //         queue.RemoveAt(0);
+// 
+    //         List<Vector2> neighbors = getNeighbors(visit);
+    //         for(int i = 0; i < neighbors.Count; ++i)
+    //         {
+// 
+    //         }
+    //     }
+// 
+    //     return possibleMoves;
+    // }
 }

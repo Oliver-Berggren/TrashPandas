@@ -11,6 +11,7 @@ abstract public class PlayerClass : MonoBehaviour
     public int steps;
     public int trash;
     public int maxNumSteps;
+    Dictionary<Vector2, int> possibleMoves; // (hex coordinate, cost)
     
     public Vector2 hexLocation;
 
