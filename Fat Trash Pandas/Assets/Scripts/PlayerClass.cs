@@ -30,6 +30,8 @@ abstract public class PlayerClass : MonoBehaviour
         // }
         //switch game mode
         //step reset
+
+        PlayerController.instance.stopListening();
     }
 
     public void pick_up(){

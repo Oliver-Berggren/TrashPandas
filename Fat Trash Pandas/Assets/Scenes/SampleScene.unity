@@ -275,6 +275,7 @@ MonoBehaviour:
   steps: 2
   trash: 0
   maxNumSteps: 0
+  hexLocation: {x: 0, y: 0}
   move_mode: 0
   near_gas: 0
   near_raccoon: 0
@@ -1586,6 +1587,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1180125539}
   - component: {fileID: 1180125538}
+  - component: {fileID: 1180125540}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -1605,8 +1607,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c0fd64d7baa5143850330b7beccd61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRotSpeed: 2
-  cameraAnchor: {fileID: 1362287950}
 --- !u!4 &1180125539
 Transform:
   m_ObjectHideFlags: 0
@@ -1621,6 +1621,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1180125540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180125537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26a91a0003d299e4da2d977cd198864f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camRotSpeed: 2
+  cameraAnchor: {fileID: 1362287950}
 --- !u!1 &1277484178 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7337796727907684567, guid: 405546e4a590e654180467b3f7b55eac,
@@ -1645,6 +1659,7 @@ MonoBehaviour:
   steps: 5
   trash: 0
   maxNumSteps: 0
+  hexLocation: {x: 0, y: 0}
   move_mode: 0
   near_tunnel: 0
   near_human: 0
@@ -2234,6 +2249,7 @@ MonoBehaviour:
   steps: 2
   trash: 0
   maxNumSteps: 0
+  hexLocation: {x: 0, y: 0}
   move_mode: 0
   near_gas: 0
   near_raccoon: 0

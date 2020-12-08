@@ -38,4 +38,10 @@ public class PlayerController : MonoBehaviour
         callAction = action;
         this.enabled = true;
     }
+
+    public void stopListening()
+    {
+        callAction = null;
+        this.enabled = false;
+    }
 }
