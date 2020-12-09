@@ -68,6 +68,8 @@ public class Raccoon : PlayerClass
             HexMap.instance.addPiece(loc, poopObj);
             HexMap.instance.setTileType(loc, 7);
             --poop;
+
+            ui.updateUI();
         }
     }
 }

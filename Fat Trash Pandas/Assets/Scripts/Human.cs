@@ -26,6 +26,9 @@ public class Human : PlayerClass
 
     public void get_gas(){
         has_gas = true;
+
+        game.end();
+        ui.endTurnButton();
     }
 
     public void remove_poop(){

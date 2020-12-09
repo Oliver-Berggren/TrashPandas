@@ -41,6 +41,9 @@ abstract public class PlayerClass : MonoBehaviour
     // modes
     public bool move_mode;
 
+    //
+    public bool poop_mode;
+
     public void move(){
         // TODO: Get possible move tiles with number of steps associated
         PlayerController.instance.startListening(tryMove);
