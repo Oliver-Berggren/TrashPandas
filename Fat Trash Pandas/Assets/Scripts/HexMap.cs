@@ -107,7 +107,7 @@ public class HexMap : MonoBehaviour
         {
             for(int x = 0; x < mapRaw[y].Count; ++x)
             {
-                // none: 0, empty: 1, dump: 2, den: 3, gas: 4, hole: 5, trash: 6, poop: 7
+                // none: 0, empty: 1, dump: 2, den: 3, gas: 4, hole: 5, trash: 6
                 if(mapRaw[y][x] != 0) // tile drawn
                 {
                     instance.addTile(new Vector2(x, y), mapRaw[y][x]);
@@ -169,30 +169,30 @@ public class HexMap : MonoBehaviour
         List<Vector2> neighbors = new List<Vector2>();
         Vector2 possibleNeighbor;
 
-        for(int y = (int)loc.y - 1; y <= loc.y + 1; y += 2) // two above and two below
+        for(int x = (int)loc.x - 1; x <= loc.x + 1; x += 2) // two above and two below
         {
-            possibleNeighbor = new Vector2(loc.x,y);
+            possibleNeighbor = new Vector2(x,loc.y);
             if(tileMap.ContainsKey(possibleNeighbor))
             {
                 neighbors.Add(possibleNeighbor);
             }
 
-            possibleNeighbor = new Vector2(loc.x - 1 + ((loc.y % 2) * 2),y);
+            possibleNeighbor = new Vector2(x,loc.y - 1 + ((loc.x % 2) * 2));
             if(tileMap.ContainsKey(possibleNeighbor))
             {
                 neighbors.Add(possibleNeighbor);
             }
         }
 
-        // two on either side
+        // one above and one below
         possibleNeighbor = loc;
-        possibleNeighbor.x += 1;
+        possibleNeighbor.y += 1;
         if(tileMap.ContainsKey(possibleNeighbor))
         {
             neighbors.Add(possibleNeighbor);
         }
 
-        possibleNeighbor.x -= 2;
+        possibleNeighbor.y -= 2;
         if(tileMap.ContainsKey(possibleNeighbor))
         {
             neighbors.Add(possibleNeighbor);
@@ -305,24 +305,43 @@ public class HexMap : MonoBehaviour
         return mapCenter;
     }
 
-    // public Dictionary<Vector2, int> getPossibleMoves(Vector2 loc, int maxMoves, bool isRaccoon)
-    // {
-    //     Dictionary<Vector2, int> possibleMoves = new Dictionary<Vector2, int>();
-    //     Dictionary<Vector2, int> queue = new Dictionary<Vector2, int>();
-    //     queue.Add(loc, 0);
-// 
-    //     while(queue.Count > 0)
-    //     {
-    //         Vector2 visit = queue.;
-    //         queue.RemoveAt(0);
-// 
-    //         List<Vector2> neighbors = getNeighbors(visit);
-    //         for(int i = 0; i < neighbors.Count; ++i)
-    //         {
-// 
-    //         }
-    //     }
-// 
-    //     return possibleMoves;
-    // }
+    // Returns coordinates and number of moves to get to all tiles that can be reached in set number of steps
+    public Dictionary<Vector2, int> getPossibleMoves(Vector2 loc, int maxMoves, bool isRaccoon)
+    {
+        Dictionary<Vector2, int> possibleMoves = new Dictionary<Vector2, int>();
+        Dictionary<Vector2, int> dist = new Dictionary<Vector2, int>();
+        List<Vector2> queue = new List<Vector2>();
+        dist.Add(loc, 0);
+        queue.Add(loc);
+        
+        while(queue.Count > 0)
+        {
+            Vector2 visit = queue[0];
+            possibleMoves.Add(visit, dist[visit]);
+            List<Vector2> neighbors = getNeighbors(visit);
+            foreach(Vector2 neighbor in neighbors)
+            {
+                int prevDist = int.MaxValue;
+                if(dist.ContainsKey(neighbor))
+                {
+                    prevDist = dist[neighbor];
+                }
+                if(isTraversable(neighbor) && dist[visit] + 1 <= maxMoves && dist[visit] + 1 < prevDist)
+                {
+                    if(dist.ContainsKey(neighbor))
+                    {
+                        dist[neighbor] = dist[visit] + 1;
+                    }
+                    else
+                    {
+                        dist.Add(neighbor, dist[visit] + 1);
+                        queue.Add(neighbor);
+                    }
+                }
+            }
+            queue.RemoveAt(0);
+        }
+
+        return possibleMoves;
+    }
 }

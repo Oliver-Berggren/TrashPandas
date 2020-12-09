@@ -11,7 +11,7 @@ abstract public class PlayerClass : MonoBehaviour
     public int steps;
     public int trash;
     public int maxNumSteps;
-    Dictionary<Vector2, int> possibleMoves; // (hex coordinate, cost)
+    public Dictionary<Vector2, int> possibleMoves; // (hex coordinate, cost)
     
     public Vector2 hexLocation;
 
@@ -19,8 +19,9 @@ abstract public class PlayerClass : MonoBehaviour
     public bool move_mode;
 
     public void move(){
-        // TODO: Get possible move tiles with number of steps associated
         PlayerController.instance.startListening(tryMove);
+
+        possibleMoves = HexMap.instance.getPossibleMoves(hexLocation, steps, false);
     }
 
     // Modes
@@ -54,9 +55,13 @@ abstract public class PlayerClass : MonoBehaviour
 
     void tryMove(Vector2 loc)
     {
-        // TODO: add check for valid move. if not valid, re-call listen
-        HexMap.instance.removePiece(hexLocation);
-        HexMap.instance.addPiece(loc, gameObject);
+        if(possibleMoves.ContainsKey(loc))
+        {
+            HexMap.instance.removePiece(hexLocation);
+            HexMap.instance.addPiece(loc, gameObject);
+            hexLocation = loc;
+            steps -= possibleMoves[loc];
+        }
     }
 
     abstract public void near_dropoff();
