@@ -2042,7 +2042,7 @@ MonoBehaviour:
   UImanager: {fileID: 1959775225}
   gameManager: {fileID: 635731562}
   game: {fileID: 0}
-  ui: {fileID: 0}
+  ui: {fileID: 1959775230}
   move_mode: 0
   poopPrefab: {fileID: 2070002163482297261, guid: 7c55c977c5fb99044aa0fb460e798fda,
     type: 3}
