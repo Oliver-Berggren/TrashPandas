@@ -6,6 +6,7 @@ public class Raccoon : PlayerClass
 {
     public GameObject poopPrefab;
     public GameObject trashPiecePrefab;
+    List<Vector2> neighbors;
 
     void Start()
     {
@@ -25,7 +26,7 @@ public class Raccoon : PlayerClass
 
     public void use_poop(){
         if (poop > 0){
-            List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
+            neighbors = HexMap.instance.getNeighbors(hexLocation);
             List<Vector2> empty = new List<Vector2>();
 
             foreach (Vector2 pos in neighbors){
@@ -64,11 +65,13 @@ public class Raccoon : PlayerClass
     }
 
     void tryPoop(Vector2 loc){
-        if (HexMap.instance.getTileType(loc) == 1){
+        if (neighbors.Contains(loc) && HexMap.instance.getTileType(loc) == 1){
             GameObject poopObj = Instantiate(poopPrefab, Vector2.zero, Quaternion.identity);
             HexMap.instance.addPiece(loc, poopObj);
             HexMap.instance.setTileType(loc, 7);
             --poop;
+
+            poop_mode = false;
 
             ui.updateUI();
             PlayerController.instance.stopListening();

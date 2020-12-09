@@ -113,6 +113,11 @@ abstract public class PlayerClass : MonoBehaviour
             steps -= possibleMoves[loc];
             PlayerController.instance.stopListening();
 
+            move_mode = false;
+
+            ui.updateUI();
+        }
+
             List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
             foreach (Vector2 pos in neighbors) {
                 int type = HexMap.instance.getTileType(pos);
@@ -139,7 +144,6 @@ abstract public class PlayerClass : MonoBehaviour
                         break;
                 }
             }
-        }
 
         ui.updateUI();
     }

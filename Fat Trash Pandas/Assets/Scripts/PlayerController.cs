@@ -6,8 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     // Singleton reference
     public static PlayerController instance;
-    public GameObject uiManager;
-    UiManager ui;
 
     // Action to be called with result (set by caller when listen enabled)
     System.Action<Vector2> callAction;
@@ -15,7 +13,6 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ui = uiManager.GetComponent<UiManager>();
         instance = this.GetComponent<PlayerController>();
         this.enabled = false;
     }
@@ -30,13 +27,6 @@ public class PlayerController : MonoBehaviour
             if(Physics.Raycast(ray, out tileHit))
             {
                 callAction(HexMap.instance.worldToHex(tileHit.transform.position));
-
-                ui.human1.move_mode = false;
-                ui.human2.move_mode = false;
-                ui.raccoon.move_mode = false;
-                ui.raccoon.poop_mode = false;
-
-                ui.updateUI();
             }
         }
     }
