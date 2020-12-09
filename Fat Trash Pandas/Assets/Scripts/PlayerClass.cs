@@ -111,6 +111,10 @@ abstract public class PlayerClass : MonoBehaviour
             HexMap.instance.addPiece(loc, gameObject);
             hexLocation = loc;
             steps -= possibleMoves[loc];
+
+            move_mode = false;
+
+            ui.updateUI();
         }
 
         List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
