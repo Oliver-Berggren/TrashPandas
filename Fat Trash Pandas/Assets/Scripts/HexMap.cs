@@ -281,6 +281,14 @@ public class HexMap : MonoBehaviour
         return null;
     }
 
+    public GameObject getPiece(Vector2 loc){
+        if(tileMap.ContainsKey(loc))
+        {
+            return tileMap[loc].transform.GetComponent<TileInfo>().occupant;
+        }
+        return null;
+    }
+
     // Returns the locations of all tunnels
     public List<Vector2> getTunnels()
     {

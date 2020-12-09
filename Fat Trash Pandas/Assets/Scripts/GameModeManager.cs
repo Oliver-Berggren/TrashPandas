@@ -58,12 +58,12 @@ public class GameModeManager : MonoBehaviour
         Debug.Log(players[playerIndex] +"'s turn has ended");
     }
 
-    void setDen()
+    public void setDen(int trash)
     {   
-        ++den;
+        den += trash;
     }
 
-    void setDump()
+    public void setDump()
     {   
         ++dump;
     }
