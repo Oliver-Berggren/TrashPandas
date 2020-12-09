@@ -252,6 +252,10 @@ public class UiManager : MonoBehaviour
         } else if (manager.playerIndex == 1){
             human2.drop_off();
         } else {
+            if(raccoon.poop < 5)
+            {
+                ++raccoon.poop;
+            }
             raccoon.drop_off();
         }
 
