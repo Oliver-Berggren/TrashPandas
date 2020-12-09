@@ -71,6 +71,7 @@ public class Raccoon : PlayerClass
             --poop;
 
             ui.updateUI();
+            PlayerController.instance.stopListening();
         }
     }
 }
