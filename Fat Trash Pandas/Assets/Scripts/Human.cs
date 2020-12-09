@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Human : PlayerClass
 {
-    public GameObject trashPiecePrefab;
-
     void Start()
     {
         hexLocation = HexMap.instance.getDump();
@@ -20,11 +18,6 @@ public class Human : PlayerClass
         //move()
         //subtract that from steps if they click on a valid hex
     }
-    
-    public bool near_gas;
-    public bool near_raccoon;
-    public bool near_dump;
-    public bool has_gas;
 
     public void use_gas(){
         this.steps += 2;
@@ -35,39 +28,18 @@ public class Human : PlayerClass
         has_gas = true;
     }
 
-    public void remove_poop(List<Vector2> neighbors){
+    public void remove_poop(){
+        List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
         foreach (Vector2 pos in neighbors) {
             int type = HexMap.instance.getTileType(pos);
             if (type == 7){
+                Destroy(HexMap.instance.getPiece(pos));
                 HexMap.instance.removePiece(pos);
-                //HexMap.instance.tileMap[pos].GetComponent<TileInfo>().tileType = 1;
+                HexMap.instance.setTileType(pos, 1);
             }
         }
 
-        end_turn();
-    }
-
-    public void scare_raccoon(Raccoon rac, List<Vector2> neighbors){
-        if (rac.trash > 0){
-            List<Vector2> empty = new List<Vector2>();
-            foreach (Vector2 pos in neighbors){
-                int type = HexMap.instance.getTileType(pos);
-                if (type == 1){
-                    empty.Add(pos);
-                }
-            }
-
-            int index = Random.Range(0, empty.Count);
-
-            GameObject trash = Instantiate(trashPiecePrefab, Vector2.zero, Quaternion.identity);
-            HexMap.instance.addPiece(empty[index], trash);
-            //HexMap.instance.tileMap[empty[index]].GetComponent<TileInfo>().tileType = 6;
-        }
-    }
-
-
-    override public void near_dropoff()
-    {
-
+        game.end();
+        ui.endTurnButton();
     }
 }

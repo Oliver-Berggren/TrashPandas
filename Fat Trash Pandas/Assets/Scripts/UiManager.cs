@@ -6,21 +6,25 @@ using UnityEngine.UI;
 public class UiManager : MonoBehaviour
 {
     public GameObject player1;
-    Human human1;
+    public Human human1;
     public GameObject player2;
-    Human human2;
+    public Human human2;
     public GameObject player3;
-    Raccoon raccoon;
+    public Raccoon raccoon;
     public GameObject man;
     GameModeManager manager;
 
-    public GameObject gas;
-    Button gasButton;
     public GameObject poop;
     Button poopButton;
     public Button pickUp;
     public Button dropOff;
     public Button move;
+
+    //human
+    public GameObject humanPanel;
+    public Button gasButton;
+    public Button getGasButton;
+    public Button removePoopButton;
     
     public Text displayTurn;
     public Text numSteps;
@@ -28,7 +32,6 @@ public class UiManager : MonoBehaviour
     public Text score;
 
     void Start() {
-        gasButton = gas.GetComponent<Button>();
         poopButton = poop.GetComponent<Button>();
 
         human1 = player1.GetComponent<Human>();
@@ -52,7 +55,7 @@ public class UiManager : MonoBehaviour
         //human turn
         if (manager.playerIndex < 2){
             //human vs racccoon action
-            gas.SetActive(true);
+            humanPanel.SetActive(true);
             poop.SetActive(false);
 
             if (manager.playerIndex == 0){
@@ -70,9 +73,19 @@ public class UiManager : MonoBehaviour
                 //buttons
                 //gas button
                 gasButton.interactable = human1.has_gas;
+                getGasButton.interactable = human1.near_gas;
+
+                removePoopButton.interactable = false;
+                List<Vector2> neighbors = HexMap.instance.getNeighbors(human1.hexLocation);
+                foreach (Vector2 pos in neighbors) {
+                    if (HexMap.instance.getTileType(pos) == 7){
+                        removePoopButton.interactable = true;
+                        break;
+                    }
+                }
 
                 //pick up trash
-                if (human1.near_trash && human1.trash > 0){
+                if (human1.near_trash && human1.trash < 1){
                     pickUp.interactable = true;
                 } else {
                     pickUp.interactable = false;
@@ -99,9 +112,19 @@ public class UiManager : MonoBehaviour
                 //buttons
                 //gas button
                 gasButton.interactable = human2.has_gas;
+                getGasButton.interactable = human2.near_gas;
+
+                removePoopButton.interactable = false;
+                List<Vector2> neighbors = HexMap.instance.getNeighbors(human2.hexLocation);
+                foreach (Vector2 pos in neighbors) {
+                    if (HexMap.instance.getTileType(pos) == 7){
+                        removePoopButton.interactable = true;
+                        break;
+                    }
+                }
 
                 //pick up trash
-                if (human2.near_trash && human2.trash > 0){
+                if (human2.near_trash && human2.trash < 1){
                     pickUp.interactable = true;
                 } else {
                     pickUp.interactable = false;
@@ -116,7 +139,7 @@ public class UiManager : MonoBehaviour
             }
         } else {
             //human vs racccoon action
-            gas.SetActive(false);
+            humanPanel.SetActive(false);
             poop.SetActive(true);
 
             displayTurn.text = "RACCOON TURN";
@@ -212,16 +235,11 @@ public class UiManager : MonoBehaviour
         //end their turn
         //go to next player's turn
 
-        if (manager.playerIndex < 2) {
-            if (manager.playerIndex == 0){
-                human1.move_mode = false;
-                human1.end_turn();
-            } else {
-                human2.move_mode = false;
-                human2.end_turn();
-            }
+        if (manager.playerIndex == 1){
+            human1.end_turn();
+        } else if (manager.playerIndex == 2){
+            human2.end_turn();
         } else {
-            raccoon.move_mode = false;
             raccoon.end_turn();
         }
 
@@ -247,6 +265,22 @@ public class UiManager : MonoBehaviour
         }
 
         updateUI();
+    }
+
+    public void receiveGas(){
+        if (manager.playerIndex == 0){
+            human1.get_gas();
+        } else {
+            human2.get_gas();
+        }
+    }
+
+    public void removePoop(){
+        if (manager.playerIndex == 0){
+            human1.remove_poop();
+        } else {
+            human2.remove_poop();
+        }
     }
 
     //TODO: Make the endGame function display a message on the screen to declare the winner
