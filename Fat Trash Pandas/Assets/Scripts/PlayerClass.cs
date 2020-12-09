@@ -110,7 +110,7 @@ abstract public class PlayerClass : MonoBehaviour
             steps -= possibleMoves[loc];
         }
 
-        List<Vector2> neighbors = HexMap.instance.getNeighbors(loc);
+        List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
         foreach (Vector2 pos in neighbors) {
             int type = HexMap.instance.getTileType(pos);
             switch(type){
