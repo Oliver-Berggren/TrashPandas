@@ -268,6 +268,7 @@ public class UiManager : MonoBehaviour
         } else if (manager.playerIndex == 2){
             human2.end_turn();
         } else {
+            raccoon.maxNumSteps = 5 - raccoon.trash;
             raccoon.end_turn();
         }
 

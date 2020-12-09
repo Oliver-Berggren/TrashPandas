@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
             if(Physics.Raycast(ray, out tileHit))
             {
                 callAction(HexMap.instance.worldToHex(tileHit.transform.position));
-                this.enabled = false;
             }
         }
     }
