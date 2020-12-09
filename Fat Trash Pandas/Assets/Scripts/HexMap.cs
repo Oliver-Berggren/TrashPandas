@@ -325,8 +325,9 @@ public class HexMap : MonoBehaviour
         while(queue.Count > 0)
         {
             Vector2 visit = queue[0];
-            possibleMoves.Add(visit, dist[visit]);
             List<Vector2> neighbors = getNeighbors(visit);
+            possibleMoves.Add(visit, dist[visit]);
+
             foreach(Vector2 neighbor in neighbors)
             {
                 int prevDist = int.MaxValue;
@@ -349,6 +350,21 @@ public class HexMap : MonoBehaviour
             }
             queue.RemoveAt(0);
         }
+
+        // foreach(Vector2 tile in possibleMoves.Keys)
+        // {
+        //     if(HexMap.instance.getTileType(tile) == 5)
+        //     {
+        //         List<Vector2> tunnels = HexMap.instance.getTunnels();
+        //         foreach(Vector2 tunnel in tunnels)
+        //         {
+        //             if(!possibleMoves.ContainsKey(tunnel))
+        //             {
+        //                 possibleMoves.Add(tunnel, maxMoves);
+        //             }
+        //         }
+        //     }
+        // }
 
         return possibleMoves;
     }
