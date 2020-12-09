@@ -133,15 +133,16 @@ abstract public class PlayerClass : MonoBehaviour
                     case 4:
                         near_gas = true;
                         break;
-                    //hole/tunnel
-                    case 5:
-                        near_tunnel = true;
-                        break;
                     //trash
                     case 6:
                         near_trash = true;
                         break;
                 }
+            }
+
+            //tunnel
+            if (HexMap.instance.getTileType(hexLocation) == 5){
+                near_tunnel = true;
             }
 
         ui.updateUI();
