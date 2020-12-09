@@ -33,16 +33,15 @@ abstract public class PlayerClass : MonoBehaviour
     public GameModeManager game;
     public UiManager ui;
 
+    // modes
+    public bool move_mode;
+    public bool poop_mode;
+    public bool tunnel_mode;
+
     void Awake() {
         ui = UImanager.GetComponent<UiManager>();
         game = gameManager.GetComponent<GameModeManager>();
     }
-
-    // modes
-    public bool move_mode;
-
-    //
-    public bool poop_mode;
 
     public void move(){
         PlayerController.instance.startListening(tryMove);
