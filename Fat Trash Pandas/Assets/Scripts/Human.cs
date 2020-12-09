@@ -7,6 +7,7 @@ public class Human : PlayerClass
     void Start()
     {
         hexLocation = HexMap.instance.getDump();
+        maxNumSteps = 2;
     }
 
     // Update is called once per frame

@@ -45,8 +45,9 @@ abstract public class PlayerClass : MonoBehaviour
     public bool poop_mode;
 
     public void move(){
-        // TODO: Get possible move tiles with number of steps associated
         PlayerController.instance.startListening(tryMove);
+
+        possibleMoves = HexMap.instance.getPossibleMoves(hexLocation, steps, false);
     }
 
     // Modes
@@ -104,12 +105,15 @@ abstract public class PlayerClass : MonoBehaviour
 
     void tryMove(Vector2 loc)
     {
-        // TODO: add check for valid move. if not valid, re-call listen
-        HexMap.instance.removePiece(hexLocation);
-        HexMap.instance.addPiece(loc, gameObject);
-        hexLocation = loc;
+        if(possibleMoves.ContainsKey(loc))
+        {
+            HexMap.instance.removePiece(hexLocation);
+            HexMap.instance.addPiece(loc, gameObject);
+            hexLocation = loc;
+            steps -= possibleMoves[loc];
+        }
 
-        List<Vector2> neighbors = HexMap.instance.getNeighbors(loc);
+        List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
         foreach (Vector2 pos in neighbors) {
             int type = HexMap.instance.getTileType(pos);
             switch(type){

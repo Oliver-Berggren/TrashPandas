@@ -10,6 +10,7 @@ public class Raccoon : PlayerClass
     void Start()
     {
         hexLocation = HexMap.instance.getDen();
+        maxNumSteps = 4;
     }
 
     // Update is called once per frame
