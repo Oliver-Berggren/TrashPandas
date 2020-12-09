@@ -351,21 +351,6 @@ public class HexMap : MonoBehaviour
             queue.RemoveAt(0);
         }
 
-        // foreach(Vector2 tile in possibleMoves.Keys)
-        // {
-        //     if(HexMap.instance.getTileType(tile) == 5)
-        //     {
-        //         List<Vector2> tunnels = HexMap.instance.getTunnels();
-        //         foreach(Vector2 tunnel in tunnels)
-        //         {
-        //             if(!possibleMoves.ContainsKey(tunnel))
-        //             {
-        //                 possibleMoves.Add(tunnel, maxMoves);
-        //             }
-        //         }
-        //     }
-        // }
-
         return possibleMoves;
     }
 }
