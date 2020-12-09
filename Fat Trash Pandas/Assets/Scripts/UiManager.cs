@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
+    //player objects
     public GameObject player1;
     public Human human1;
     public GameObject player2;
@@ -14,6 +15,7 @@ public class UiManager : MonoBehaviour
     public GameObject man;
     GameModeManager manager;
 
+    //action button
     public GameObject poop;
     Button poopButton;
     public Button pickUp;
@@ -26,10 +28,12 @@ public class UiManager : MonoBehaviour
     public Button getGasButton;
     public Button removePoopButton;
     
+    //display texts
     public Text displayTurn;
     public Text numSteps;
     public Text inventory;
     public Text score;
+    public Text mode;
 
     void Start() {
         poopButton = poop.GetComponent<Button>();
@@ -51,6 +55,8 @@ public class UiManager : MonoBehaviour
 
         //score
         score.text = "SCORE \n Humans: " + manager.dump + "\n Raccoon: " + manager.den;
+        //mode
+        mode.text = "Mode: ";
 
         //human turn
         if (manager.playerIndex < 2){
@@ -69,6 +75,12 @@ public class UiManager : MonoBehaviour
                         inventory.text += "and Trash";
                 else if (human1.trash > 0)
                     inventory.text += "Trash";
+
+                if (human1.move_mode){
+                    mode.text += "Moving";
+                } else {
+                    mode.text += "Waiting";
+                }
 
                 //buttons
                 //gas button
@@ -109,6 +121,12 @@ public class UiManager : MonoBehaviour
                 else if (human2.trash > 0)
                     inventory.text += "Trash";
 
+                if (human2.move_mode){
+                    mode.text += "Moving";
+                } else {
+                    mode.text += "Waiting";
+                }
+
                 //buttons
                 //gas button
                 gasButton.interactable = human2.has_gas;
@@ -144,13 +162,21 @@ public class UiManager : MonoBehaviour
 
             displayTurn.text = "RACCOON TURN";
             numSteps.text = "Steps: " + raccoon.steps;
-                inventory.text = "Inventory: ";
-                if (raccoon.poop > 0)
-                    inventory.text += "Poop= " + raccoon.poop;
-                    if (raccoon.trash > 0)
-                        inventory.text += "and Trash= " + raccoon.trash;
-                else if (raccoon.trash > 0)
-                    inventory.text += "Trash= " + raccoon.trash;
+            inventory.text = "Inventory: ";
+            if (raccoon.poop > 0)
+                inventory.text += "Poop= " + raccoon.poop;
+                if (raccoon.trash > 0)
+                    inventory.text += "and Trash= " + raccoon.trash;
+            else if (raccoon.trash > 0)
+                inventory.text += "Trash= " + raccoon.trash;
+
+            if (raccoon.move_mode){
+                mode.text += "Moving";
+            } else if (raccoon.poop_mode){
+                mode.text += "Pooping";
+            } else {
+                mode.text += "Waiting";
+            }
 
             //buttons
             //poop
@@ -191,6 +217,8 @@ public class UiManager : MonoBehaviour
             raccoon.move_mode = true;
             raccoon.move();
         }
+
+        updateUI();
     }
 
     public void pickUpButton(){
@@ -261,6 +289,7 @@ public class UiManager : MonoBehaviour
         } else if (manager.playerIndex == 1){
             human2.use_gas();
         } else {
+            raccoon.poop_mode = true;
             raccoon.use_poop();
         }
 

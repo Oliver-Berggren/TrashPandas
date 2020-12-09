@@ -41,6 +41,9 @@ abstract public class PlayerClass : MonoBehaviour
     // modes
     public bool move_mode;
 
+    //
+    public bool poop_mode;
+
     public void move(){
         PlayerController.instance.startListening(tryMove);
 
