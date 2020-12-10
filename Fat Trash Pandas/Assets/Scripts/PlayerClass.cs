@@ -13,9 +13,10 @@ abstract public class PlayerClass : MonoBehaviour
 
     // Movement variables
     Dictionary<Vector2, int> possibleMoves; // (hex coordinate, cost)
-    Dictionary<Vector2, Vector2> prevTile; // previous tile, for pathing
-    List<Vector2> path; // ordered list of tiles to travel through
-    public float moveSpeed;
+    Dictionary<Vector2, Vector2> prevTiles; // previous tile, for pathing
+    List<Vector2> path = new List<Vector2>(); // ordered list of tiles to travel through
+    int currStep; // index of current tile being moved to in path
+    static float moveSpeed = 1f;
     bool isMoving = false;
 
     //human
@@ -48,18 +49,33 @@ abstract public class PlayerClass : MonoBehaviour
         ui = UImanager.GetComponent<UiManager>();
         game = gameManager.GetComponent<GameModeManager>();
     }
-    
+
     void Update()
     {
         if(isMoving)
         {
-
+            // hasn't reached next tile yet
+            if(Vector3.Magnitude(transform.position - HexMap.instance.hexToWorld(path[currStep - 1])) < HexMap.instance.yOffset)
+            {
+                transform.position += moveSpeed * (HexMap.instance.hexToWorld(path[currStep]) - 
+                                      HexMap.instance.hexToWorld(path[currStep - 1])) * Time.deltaTime;
+            }
+            else // reached next tile
+            {
+                Debug.Log("Tile Reached " + path[currStep]);
+                ++currStep;
+                if(currStep >= path.Count) // past end of path
+                {
+                    isMoving = false;
+                    HexMap.instance.addPiece(hexLocation, this.gameObject);
+                }
+            }
         }
     }
 
     public void move(){
         PlayerController.instance.startListening(tryMove);
-        possibleMoves = HexMap.instance.getPossibleMoves(hexLocation, steps, out prevTile);
+        possibleMoves = HexMap.instance.getPossibleMoves(hexLocation, steps, out prevTiles);
     }
 
     // Modes
@@ -120,8 +136,8 @@ abstract public class PlayerClass : MonoBehaviour
         if(possibleMoves.ContainsKey(loc))
         {
             HexMap.instance.removePiece(hexLocation);
-            moveAnim(loc);
-            HexMap.instance.addPiece(loc, gameObject);
+            startMoveAnim(loc);
+            // HexMap.instance.addPiece(loc, gameObject);
             hexLocation = loc;
             steps -= possibleMoves[loc];
             PlayerController.instance.stopListening();
@@ -162,7 +178,7 @@ abstract public class PlayerClass : MonoBehaviour
         ui.updateUI();
     }
 
-    void moveAnim(Vector2 loc)
+    void startMoveAnim(Vector2 loc)
     {
         isMoving = true;
         path = new List<Vector2>();
@@ -172,8 +188,12 @@ abstract public class PlayerClass : MonoBehaviour
         while(currLoc != hexLocation)
         {
             path.Insert(0, currLoc);
-            currLoc = prevTile[currLoc];
+            currLoc = prevTiles[currLoc];
         }
         path.Insert(0, currLoc);
+
+        transform.position = HexMap.instance.hexToWorld(hexLocation);
+        currStep = 1;
+        Debug.Log("Move Start");
     }
 }

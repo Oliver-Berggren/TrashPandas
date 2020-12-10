@@ -65,8 +65,8 @@ public class HexMap : MonoBehaviour
     public float spacing;
 
     // Placement unit values
-    float xOffset; 
-    float yOffset;
+    public float xOffset; 
+    public float yOffset;
 
     // Map Containers
     Dictionary<Vector2, GameObject> tileMap = new Dictionary<Vector2, GameObject>();
@@ -264,7 +264,6 @@ public class HexMap : MonoBehaviour
     public void addPiece(Vector2 loc, GameObject obj)
     {
         Vector3 pos = instance.hexToWorld(loc);
-        pos.y += tileHeight;
         obj.transform.position = pos;
         tileMap[loc].GetComponent<TileInfo>().occupant = obj;
     }
