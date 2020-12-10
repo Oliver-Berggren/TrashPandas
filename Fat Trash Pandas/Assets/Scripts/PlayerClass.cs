@@ -10,7 +10,13 @@ abstract public class PlayerClass : MonoBehaviour
     public int steps;
     public int trash;
     public int maxNumSteps;
+
+    // Movement variables
     Dictionary<Vector2, int> possibleMoves; // (hex coordinate, cost)
+    Dictionary<Vector2, Vector2> prevTile; // previous tile, for pathing
+    List<Vector2> path; // ordered list of tiles to travel through
+    public float moveSpeed;
+    bool isMoving = false;
 
     //human
     public bool near_gas;
@@ -43,11 +49,17 @@ abstract public class PlayerClass : MonoBehaviour
 
     //
     public bool poop_mode;
+    void Update()
+    {
+        if(isMoving)
+        {
+
+        }
+    }
 
     public void move(){
         PlayerController.instance.startListening(tryMove);
-
-        possibleMoves = HexMap.instance.getPossibleMoves(hexLocation, steps, false);
+        possibleMoves = HexMap.instance.getPossibleMoves(hexLocation, steps, out prevTile);
     }
 
     // Modes
@@ -108,6 +120,7 @@ abstract public class PlayerClass : MonoBehaviour
         if(possibleMoves.ContainsKey(loc))
         {
             HexMap.instance.removePiece(hexLocation);
+            moveAnim(loc);
             HexMap.instance.addPiece(loc, gameObject);
             hexLocation = loc;
             steps -= possibleMoves[loc];
@@ -146,5 +159,20 @@ abstract public class PlayerClass : MonoBehaviour
             }
 
         ui.updateUI();
+    }
+
+    void moveAnim(Vector2 loc)
+    {
+        isMoving = true;
+        path = new List<Vector2>();
+        
+        // Setup path
+        Vector2 currLoc = loc; // tracking current spot stepping back from destination to start
+        while(currLoc != hexLocation)
+        {
+            path.Insert(0, currLoc);
+            currLoc = prevTile[currLoc];
+        }
+        path.Insert(0, currLoc);
     }
 }

@@ -314,14 +314,16 @@ public class HexMap : MonoBehaviour
     }
 
     // Returns coordinates and number of moves to get to all tiles that can be reached in set number of steps
-    public Dictionary<Vector2, int> getPossibleMoves(Vector2 loc, int maxMoves, bool isRaccoon)
+    public Dictionary<Vector2, int> getPossibleMoves(Vector2 loc, int maxMoves, out Dictionary<Vector2, Vector2> prev)
     {
         Dictionary<Vector2, int> possibleMoves = new Dictionary<Vector2, int>();
         Dictionary<Vector2, int> dist = new Dictionary<Vector2, int>();
         List<Vector2> queue = new List<Vector2>();
+        prev = new Dictionary<Vector2, Vector2>();
         dist.Add(loc, 0);
         queue.Add(loc);
-        
+        prev.Add(loc, loc);
+
         while(queue.Count > 0)
         {
             Vector2 visit = queue[0];
@@ -340,11 +342,13 @@ public class HexMap : MonoBehaviour
                     if(dist.ContainsKey(neighbor))
                     {
                         dist[neighbor] = dist[visit] + 1;
+                        prev[neighbor] = visit;
                     }
                     else
                     {
                         dist.Add(neighbor, dist[visit] + 1);
                         queue.Add(neighbor);
+                        prev.Add(neighbor, visit);
                     }
                 }
             }
