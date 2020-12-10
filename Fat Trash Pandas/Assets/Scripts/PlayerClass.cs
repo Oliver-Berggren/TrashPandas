@@ -77,6 +77,10 @@ abstract public class PlayerClass : MonoBehaviour
                     isMoving = false;
                     HexMap.instance.addPiece(hexLocation, this.gameObject);
                 }
+                else
+                {
+                    transform.LookAt(HexMap.instance.getTile(path[currStep]).transform, Vector3.up);
+                }
             }
         }
     }
@@ -200,9 +204,10 @@ abstract public class PlayerClass : MonoBehaviour
         }
         path.Insert(0, currLoc);
 
-        transform.position = HexMap.instance.hexToWorld(hexLocation);
         currStep = 1;
         elapsed = 0;
+        transform.position = HexMap.instance.hexToWorld(hexLocation);
+        transform.LookAt(HexMap.instance.getTile(path[currStep]).transform, Vector3.up);
         Debug.Log("Move Start");
     }
 }

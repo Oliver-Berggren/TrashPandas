@@ -158,7 +158,7 @@ public class HexMap : MonoBehaviour
     }
 
     // Returns tile at given hex coordinate
-    GameObject getTile(Vector2 loc)
+    public GameObject getTile(Vector2 loc)
     {
         return tileMap[loc];
     }
