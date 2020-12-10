@@ -16,7 +16,8 @@ abstract public class PlayerClass : MonoBehaviour
     Dictionary<Vector2, Vector2> prevTiles; // previous tile, for pathing
     List<Vector2> path = new List<Vector2>(); // ordered list of tiles to travel through
     int currStep; // index of current tile being moved to in path
-    static float moveSpeed = 1f;
+    static float moveDuration = 0.5f;
+    float elapsed = 0;
     bool isMoving = false;
 
     //human
@@ -54,16 +55,22 @@ abstract public class PlayerClass : MonoBehaviour
     {
         if(isMoving)
         {
+            elapsed += Time.deltaTime;
             // hasn't reached next tile yet
-            if(Vector3.Magnitude(transform.position - HexMap.instance.hexToWorld(path[currStep - 1])) < HexMap.instance.yOffset)
+            if(elapsed < moveDuration)
             {
-                transform.position += moveSpeed * (HexMap.instance.hexToWorld(path[currStep]) - 
-                                      HexMap.instance.hexToWorld(path[currStep - 1])) * Time.deltaTime;
+                // transform.position += moveSpeed * (HexMap.instance.hexToWorld(path[currStep]) - 
+                //                       HexMap.instance.hexToWorld(path[currStep - 1])) * Time.deltaTime;
+
+                transform.position = Vector3.Lerp(HexMap.instance.hexToWorld(path[currStep - 1]), 
+                                     HexMap.instance.hexToWorld(path[currStep]), 
+                                     elapsed / moveDuration);
             }
             else // reached next tile
             {
                 Debug.Log("Tile Reached " + path[currStep]);
                 ++currStep;
+                elapsed = 0;
                 if(currStep >= path.Count) // past end of path
                 {
                     isMoving = false;
@@ -194,6 +201,7 @@ abstract public class PlayerClass : MonoBehaviour
 
         transform.position = HexMap.instance.hexToWorld(hexLocation);
         currStep = 1;
+        elapsed = 0;
         Debug.Log("Move Start");
     }
 }
