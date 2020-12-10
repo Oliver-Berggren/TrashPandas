@@ -213,6 +213,12 @@ abstract public class PlayerClass : MonoBehaviour
 
     void updateNeighbors()
     {
+        // Reset values to false
+        near_dump = false;
+        near_den = false;
+        near_gas = false;
+        near_trash = false;
+
         List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
         foreach (Vector2 pos in neighbors) {
             int type = HexMap.instance.getTileType(pos);
