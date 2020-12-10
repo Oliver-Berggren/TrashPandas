@@ -17,8 +17,13 @@ abstract public class PlayerClass : MonoBehaviour
     List<Vector2> path = new List<Vector2>(); // ordered list of tiles to travel through
     int currStep; // index of current tile being moved to in path
     static float moveDuration = 0.5f;
-    float elapsed = 0;
+    static float turnDuration = 0.2f;
+    Quaternion startRot;
+    Quaternion endRot;
+    float moveElapsed = 0;
+    float turnElapsed = 0;
     bool isMoving = false;
+    bool isTurning = false;
 
     //human
     public bool near_gas;
@@ -55,32 +60,50 @@ abstract public class PlayerClass : MonoBehaviour
     {
         if(isMoving)
         {
-            elapsed += Time.deltaTime;
+            moveElapsed += Time.deltaTime;
             // hasn't reached next tile yet
-            if(elapsed < moveDuration)
+            if(moveElapsed < moveDuration)
             {
                 Vector3 newPos;
                 Vector3 startPos = HexMap.instance.hexToWorld(path[currStep - 1]);
                 Vector3 endPos = HexMap.instance.hexToWorld(path[currStep]);
-                newPos.x = Mathf.SmoothStep(startPos.x, endPos.x, elapsed / moveDuration);
-                newPos.y = Mathf.SmoothStep(startPos.y, endPos.y, elapsed / moveDuration);
-                newPos.z = Mathf.SmoothStep(startPos.z, endPos.z, elapsed / moveDuration);
+                newPos.x = Mathf.SmoothStep(startPos.x, endPos.x, moveElapsed / moveDuration);
+                newPos.y = Mathf.SmoothStep(startPos.y, endPos.y, moveElapsed / moveDuration);
+                newPos.z = Mathf.SmoothStep(startPos.z, endPos.z, moveElapsed / moveDuration);
                 transform.position = newPos;
             }
             else // reached next tile
             {
                 Debug.Log("Tile Reached " + path[currStep]);
                 ++currStep;
-                elapsed = 0;
+                moveElapsed = 0;
                 if(currStep >= path.Count) // past end of path
                 {
                     isMoving = false;
                     HexMap.instance.addPiece(hexLocation, this.gameObject);
                 }
-                else
+                else // more tiles on path
                 {
-                    transform.LookAt(HexMap.instance.getTile(path[currStep]).transform, Vector3.up);
+                    isTurning = true;
+                    isMoving = false;
+                    startRot = transform.rotation;
+                    endRot = Quaternion.LookRotation(HexMap.instance.getTile(path[currStep]).transform.position - transform.position);
+                    turnElapsed = 0;
                 }
+            }
+        }
+        else if(isTurning)
+        {
+            turnElapsed += Time.deltaTime;
+            if(turnElapsed < turnDuration)
+            {
+                transform.rotation = Quaternion.Lerp(startRot, endRot, turnElapsed / turnDuration);
+            }
+            else
+            {
+                 Debug.Log("Stopped turning " + hexLocation);
+                 isTurning = false;
+                 isMoving = true;
             }
         }
     }
@@ -178,9 +201,13 @@ abstract public class PlayerClass : MonoBehaviour
         path.Insert(0, currLoc);
 
         currStep = 1;
-        elapsed = 0;
+        moveElapsed = 0;
         transform.position = HexMap.instance.hexToWorld(hexLocation);
-        transform.LookAt(HexMap.instance.getTile(path[currStep]).transform, Vector3.up);
+        isTurning = true;
+        isMoving = false;
+        startRot = transform.rotation;
+        endRot = Quaternion.LookRotation(HexMap.instance.getTile(path[currStep]).transform.position - transform.position);
+        turnElapsed = 0;
         Debug.Log("Move Start");
     }
 
