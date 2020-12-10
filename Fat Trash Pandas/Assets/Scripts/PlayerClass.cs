@@ -157,35 +157,8 @@ abstract public class PlayerClass : MonoBehaviour
             move_mode = false;
 
             ui.updateUI();
+            updateNeighbors();
         }
-
-            List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
-            foreach (Vector2 pos in neighbors) {
-                int type = HexMap.instance.getTileType(pos);
-                switch(type){
-                    //dump
-                    case 2:
-                        near_dump = true;
-                        break;
-                    //den
-                    case 3:
-                        near_den = true;
-                        break;
-                    //gas station
-                    case 4:
-                        near_gas = true;
-                        break;
-                    //trash
-                    case 6:
-                        near_trash = true;
-                        break;
-                }
-            }
-
-            //tunnel
-            if (HexMap.instance.getTileType(hexLocation) == 5){
-                near_tunnel = true;
-            }
 
         ui.updateUI();
     }
@@ -209,5 +182,35 @@ abstract public class PlayerClass : MonoBehaviour
         transform.position = HexMap.instance.hexToWorld(hexLocation);
         transform.LookAt(HexMap.instance.getTile(path[currStep]).transform, Vector3.up);
         Debug.Log("Move Start");
+    }
+
+    void updateNeighbors()
+    {
+        List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
+        foreach (Vector2 pos in neighbors) {
+            int type = HexMap.instance.getTileType(pos);
+            switch(type){
+                //dump
+                case 2:
+                    near_dump = true;
+                    break;
+                //den
+                case 3:
+                    near_den = true;
+                    break;
+                //gas station
+                case 4:
+                    near_gas = true;
+                    break;
+                //trash
+                case 6:
+                    near_trash = true;
+                    break;
+            }
+        }
+        //tunnel
+        if (HexMap.instance.getTileType(hexLocation) == 5){
+            near_tunnel = true;
+        }
     }
 }
