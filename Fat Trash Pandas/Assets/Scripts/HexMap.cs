@@ -327,7 +327,10 @@ public class HexMap : MonoBehaviour
         {
             Vector2 visit = queue[0];
             List<Vector2> neighbors = getNeighbors(visit);
-            possibleMoves.Add(visit, dist[visit]);
+            if(isTraversable(visit))
+            {
+                possibleMoves.Add(visit, dist[visit]);
+            }
 
             foreach(Vector2 neighbor in neighbors)
             {
