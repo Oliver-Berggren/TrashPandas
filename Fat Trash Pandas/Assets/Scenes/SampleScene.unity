@@ -667,8 +667,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295051310}
-  m_LocalRotation: {x: -0.5294903, y: 0.00023975222, z: -0.00013760058, w: -0.848316}
-  m_LocalPosition: {x: 8.121821, y: 15.582191, z: -1.2096481}
+  m_LocalRotation: {x: -0.53959125, y: 0.010339823, z: -0.0066184755, w: -0.8418377}
+  m_LocalPosition: {x: 10.068555, y: 19.80487, z: -1.825964}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1258,6 +1258,8 @@ MonoBehaviour:
   trashPiecePrefab: {fileID: 7977739633874924187, guid: d30990db842bb5d4398c83ff5c9d16ff,
     type: 3}
   spacing: 0.1
+  xOffset: 0
+  yOffset: 0
   mapLayout: {fileID: 4900000, guid: 13dee98d2d49b3d4b86847b6f73d244c, type: 3}
   mapCenter: {x: 0, y: 0, z: 0}
 --- !u!4 &578399559
