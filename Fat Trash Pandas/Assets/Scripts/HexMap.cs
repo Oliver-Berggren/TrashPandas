@@ -65,8 +65,8 @@ public class HexMap : MonoBehaviour
     public float spacing;
 
     // Placement unit values
-    float xOffset; 
-    float yOffset;
+    public float xOffset; 
+    public float yOffset;
 
     // Map Containers
     Dictionary<Vector2, GameObject> tileMap = new Dictionary<Vector2, GameObject>();
@@ -158,7 +158,7 @@ public class HexMap : MonoBehaviour
     }
 
     // Returns tile at given hex coordinate
-    GameObject getTile(Vector2 loc)
+    public GameObject getTile(Vector2 loc)
     {
         return tileMap[loc];
     }
@@ -264,7 +264,6 @@ public class HexMap : MonoBehaviour
     public void addPiece(Vector2 loc, GameObject obj)
     {
         Vector3 pos = instance.hexToWorld(loc);
-        pos.y += tileHeight;
         obj.transform.position = pos;
         tileMap[loc].GetComponent<TileInfo>().occupant = obj;
     }
@@ -314,19 +313,24 @@ public class HexMap : MonoBehaviour
     }
 
     // Returns coordinates and number of moves to get to all tiles that can be reached in set number of steps
-    public Dictionary<Vector2, int> getPossibleMoves(Vector2 loc, int maxMoves, bool isRaccoon)
+    public Dictionary<Vector2, int> getPossibleMoves(Vector2 loc, int maxMoves, out Dictionary<Vector2, Vector2> prev)
     {
         Dictionary<Vector2, int> possibleMoves = new Dictionary<Vector2, int>();
         Dictionary<Vector2, int> dist = new Dictionary<Vector2, int>();
         List<Vector2> queue = new List<Vector2>();
+        prev = new Dictionary<Vector2, Vector2>();
         dist.Add(loc, 0);
         queue.Add(loc);
-        
+        prev.Add(loc, loc);
+
         while(queue.Count > 0)
         {
             Vector2 visit = queue[0];
             List<Vector2> neighbors = getNeighbors(visit);
-            possibleMoves.Add(visit, dist[visit]);
+            if(isTraversable(visit))
+            {
+                possibleMoves.Add(visit, dist[visit]);
+            }
 
             foreach(Vector2 neighbor in neighbors)
             {
@@ -340,11 +344,13 @@ public class HexMap : MonoBehaviour
                     if(dist.ContainsKey(neighbor))
                     {
                         dist[neighbor] = dist[visit] + 1;
+                        prev[neighbor] = visit;
                     }
                     else
                     {
                         dist.Add(neighbor, dist[visit] + 1);
                         queue.Add(neighbor);
+                        prev.Add(neighbor, visit);
                     }
                 }
             }

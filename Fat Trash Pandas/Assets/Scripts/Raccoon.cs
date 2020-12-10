@@ -14,16 +14,6 @@ public class Raccoon : PlayerClass
         maxNumSteps = 4;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if in move mode,
-        //highlight moveable hexes
-        //do the stuff in the playercontroller.cs thing
-        //move()
-        //subtract that from steps if they click on a valid hex
-    }
-
     public void use_poop(){
         if (poop > 0){
             neighbors = HexMap.instance.getNeighbors(hexLocation);

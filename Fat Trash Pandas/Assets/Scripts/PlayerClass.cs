@@ -10,7 +10,15 @@ abstract public class PlayerClass : MonoBehaviour
     public int steps;
     public int trash;
     public int maxNumSteps;
+
+    // Movement variables
     Dictionary<Vector2, int> possibleMoves; // (hex coordinate, cost)
+    Dictionary<Vector2, Vector2> prevTiles; // previous tile, for pathing
+    List<Vector2> path = new List<Vector2>(); // ordered list of tiles to travel through
+    int currStep; // index of current tile being moved to in path
+    static float moveDuration = 0.5f;
+    float elapsed = 0;
+    bool isMoving = false;
 
     //human
     public bool near_gas;
@@ -43,10 +51,43 @@ abstract public class PlayerClass : MonoBehaviour
         game = gameManager.GetComponent<GameModeManager>();
     }
 
+    void Update()
+    {
+        if(isMoving)
+        {
+            elapsed += Time.deltaTime;
+            // hasn't reached next tile yet
+            if(elapsed < moveDuration)
+            {
+                Vector3 newPos;
+                Vector3 startPos = HexMap.instance.hexToWorld(path[currStep - 1]);
+                Vector3 endPos = HexMap.instance.hexToWorld(path[currStep]);
+                newPos.x = Mathf.SmoothStep(startPos.x, endPos.x, elapsed / moveDuration);
+                newPos.y = Mathf.SmoothStep(startPos.y, endPos.y, elapsed / moveDuration);
+                newPos.z = Mathf.SmoothStep(startPos.z, endPos.z, elapsed / moveDuration);
+                transform.position = newPos;
+            }
+            else // reached next tile
+            {
+                Debug.Log("Tile Reached " + path[currStep]);
+                ++currStep;
+                elapsed = 0;
+                if(currStep >= path.Count) // past end of path
+                {
+                    isMoving = false;
+                    HexMap.instance.addPiece(hexLocation, this.gameObject);
+                }
+                else
+                {
+                    transform.LookAt(HexMap.instance.getTile(path[currStep]).transform, Vector3.up);
+                }
+            }
+        }
+    }
+
     public void move(){
         PlayerController.instance.startListening(tryMove);
-
-        possibleMoves = HexMap.instance.getPossibleMoves(hexLocation, steps, false);
+        possibleMoves = HexMap.instance.getPossibleMoves(hexLocation, steps, out prevTiles);
     }
 
     // Modes
@@ -107,7 +148,8 @@ abstract public class PlayerClass : MonoBehaviour
         if(possibleMoves.ContainsKey(loc))
         {
             HexMap.instance.removePiece(hexLocation);
-            HexMap.instance.addPiece(loc, gameObject);
+            startMoveAnim(loc);
+            // HexMap.instance.addPiece(loc, gameObject);
             hexLocation = loc;
             steps -= possibleMoves[loc];
             PlayerController.instance.stopListening();
@@ -115,36 +157,60 @@ abstract public class PlayerClass : MonoBehaviour
             move_mode = false;
 
             ui.updateUI();
+            updateNeighbors();
         }
 
-            List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
-            foreach (Vector2 pos in neighbors) {
-                int type = HexMap.instance.getTileType(pos);
-                switch(type){
-                    //dump
-                    case 2:
-                        near_dump = true;
-                        break;
-                    //den
-                    case 3:
-                        near_den = true;
-                        break;
-                    //gas station
-                    case 4:
-                        near_gas = true;
-                        break;
-                    //trash
-                    case 6:
-                        near_trash = true;
-                        break;
-                }
-            }
-
-            //tunnel
-            if (HexMap.instance.getTileType(hexLocation) == 5){
-                near_tunnel = true;
-            }
-
         ui.updateUI();
+    }
+
+    void startMoveAnim(Vector2 loc)
+    {
+        isMoving = true;
+        path = new List<Vector2>();
+        
+        // Setup path
+        Vector2 currLoc = loc; // tracking current spot stepping back from destination to start
+        while(currLoc != hexLocation)
+        {
+            path.Insert(0, currLoc);
+            currLoc = prevTiles[currLoc];
+        }
+        path.Insert(0, currLoc);
+
+        currStep = 1;
+        elapsed = 0;
+        transform.position = HexMap.instance.hexToWorld(hexLocation);
+        transform.LookAt(HexMap.instance.getTile(path[currStep]).transform, Vector3.up);
+        Debug.Log("Move Start");
+    }
+
+    void updateNeighbors()
+    {
+        List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
+        foreach (Vector2 pos in neighbors) {
+            int type = HexMap.instance.getTileType(pos);
+            switch(type){
+                //dump
+                case 2:
+                    near_dump = true;
+                    break;
+                //den
+                case 3:
+                    near_den = true;
+                    break;
+                //gas station
+                case 4:
+                    near_gas = true;
+                    break;
+                //trash
+                case 6:
+                    near_trash = true;
+                    break;
+            }
+        }
+        //tunnel
+        if (HexMap.instance.getTileType(hexLocation) == 5){
+            near_tunnel = true;
+        }
     }
 }
