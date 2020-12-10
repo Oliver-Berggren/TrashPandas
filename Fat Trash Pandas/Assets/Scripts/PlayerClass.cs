@@ -59,12 +59,13 @@ abstract public class PlayerClass : MonoBehaviour
             // hasn't reached next tile yet
             if(elapsed < moveDuration)
             {
-                // transform.position += moveSpeed * (HexMap.instance.hexToWorld(path[currStep]) - 
-                //                       HexMap.instance.hexToWorld(path[currStep - 1])) * Time.deltaTime;
-
-                transform.position = Vector3.Lerp(HexMap.instance.hexToWorld(path[currStep - 1]), 
-                                     HexMap.instance.hexToWorld(path[currStep]), 
-                                     elapsed / moveDuration);
+                Vector3 newPos;
+                Vector3 startPos = HexMap.instance.hexToWorld(path[currStep - 1]);
+                Vector3 endPos = HexMap.instance.hexToWorld(path[currStep]);
+                newPos.x = Mathf.SmoothStep(startPos.x, endPos.x, elapsed / moveDuration);
+                newPos.y = Mathf.SmoothStep(startPos.y, endPos.y, elapsed / moveDuration);
+                newPos.z = Mathf.SmoothStep(startPos.z, endPos.z, elapsed / moveDuration);
+                transform.position = newPos;
             }
             else // reached next tile
             {
