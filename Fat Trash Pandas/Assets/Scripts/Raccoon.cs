@@ -64,6 +64,10 @@ public class Raccoon : PlayerClass
         }
     }
 
+    public void useTunnel(){
+        PlayerController.instance.startListening(tryTunnel);
+    }
+
     void tryPoop(Vector2 loc){
         if (neighbors.Contains(loc) && HexMap.instance.getTileType(loc) == 1){
             GameObject poopObj = Instantiate(poopPrefab, Vector2.zero, Quaternion.identity);
@@ -75,6 +79,24 @@ public class Raccoon : PlayerClass
 
             ui.updateUI();
             PlayerController.instance.stopListening();
+        }
+    }
+
+    void tryTunnel(Vector2 loc){
+        List<Vector2> tunnels = HexMap.instance.getTunnels();
+
+        if (tunnels.Contains(loc)){
+            HexMap.instance.removePiece(hexLocation);
+            HexMap.instance.addPiece(loc, gameObject);
+            hexLocation = loc;
+
+            tunnel_mode = false;
+
+            ui.updateUI();
+            PlayerController.instance.stopListening();
+
+            game.end();
+            ui.endTurnButton();
         }
     }
 }

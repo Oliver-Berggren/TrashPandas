@@ -16,8 +16,6 @@ public class UiManager : MonoBehaviour
     GameModeManager manager;
 
     //action button
-    public GameObject poop;
-    Button poopButton;
     public Button pickUp;
     public Button dropOff;
     public Button move;
@@ -27,6 +25,11 @@ public class UiManager : MonoBehaviour
     public Button gasButton;
     public Button getGasButton;
     public Button removePoopButton;
+
+    //raccoon
+    public GameObject raccoonPanel;
+    public Button poopButton;
+    public Button tunnelButton;
     
     //display texts
     public Text displayTurn;
@@ -36,8 +39,6 @@ public class UiManager : MonoBehaviour
     public Text mode;
 
     void Start() {
-        poopButton = poop.GetComponent<Button>();
-
         human1 = player1.GetComponent<Human>();
         human2 = player2.GetComponent<Human>();
 
@@ -62,7 +63,7 @@ public class UiManager : MonoBehaviour
         if (manager.playerIndex < 2){
             //human vs racccoon action
             humanPanel.SetActive(true);
-            poop.SetActive(false);
+            raccoonPanel.SetActive(false);
 
             if (manager.playerIndex == 0){
                 //text
@@ -158,7 +159,7 @@ public class UiManager : MonoBehaviour
         } else {
             //human vs racccoon action
             humanPanel.SetActive(false);
-            poop.SetActive(true);
+            raccoonPanel.SetActive(true);
 
             displayTurn.text = "RACCOON TURN";
             numSteps.text = "Steps: " + raccoon.steps;
@@ -174,6 +175,8 @@ public class UiManager : MonoBehaviour
                 mode.text += "Moving";
             } else if (raccoon.poop_mode){
                 mode.text += "Pooping";
+            } else if (raccoon.tunnel_mode){
+                mode.text += "Tunneling";
             } else {
                 mode.text += "Waiting";
             }
@@ -185,6 +188,8 @@ public class UiManager : MonoBehaviour
             } else {
                 poopButton.interactable = false;
             }
+
+            tunnelButton.interactable = raccoon.near_tunnel;
 
             //pick up trash
             if (raccoon.near_trash && raccoon.trash < 5){
@@ -315,6 +320,12 @@ public class UiManager : MonoBehaviour
         } else {
             human2.remove_poop();
         }
+    }
+
+    public void tunnel(){
+        raccoon.tunnel_mode = true;
+        raccoon.useTunnel();
+        updateUI();
     }
 
     //TODO: Make the endGame function display a message on the screen to declare the winner

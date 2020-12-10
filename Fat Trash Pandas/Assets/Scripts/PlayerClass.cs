@@ -39,16 +39,16 @@ abstract public class PlayerClass : MonoBehaviour
     public GameModeManager game;
     public UiManager ui;
 
+    // modes
+    public bool move_mode;
+    public bool poop_mode;
+    public bool tunnel_mode;
+
     void Awake() {
         ui = UImanager.GetComponent<UiManager>();
         game = gameManager.GetComponent<GameModeManager>();
     }
-
-    // modes
-    public bool move_mode;
-
-    //
-    public bool poop_mode;
+    
     void Update()
     {
         if(isMoving)
@@ -147,15 +147,16 @@ abstract public class PlayerClass : MonoBehaviour
                     case 4:
                         near_gas = true;
                         break;
-                    //hole/tunnel
-                    case 5:
-                        near_tunnel = true;
-                        break;
                     //trash
                     case 6:
                         near_trash = true;
                         break;
                 }
+            }
+
+            //tunnel
+            if (HexMap.instance.getTileType(hexLocation) == 5){
+                near_tunnel = true;
             }
 
         ui.updateUI();
