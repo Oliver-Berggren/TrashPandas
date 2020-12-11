@@ -179,7 +179,6 @@ abstract public class PlayerClass : MonoBehaviour
 
             move_mode = false;
 
-            ui.updateUI();
             updateNeighbors();
         }
 
