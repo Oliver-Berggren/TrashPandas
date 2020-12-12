@@ -218,6 +218,7 @@ abstract public class PlayerClass : MonoBehaviour
         near_den = false;
         near_gas = false;
         near_trash = false;
+        near_tunnel =false;
 
         List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
         foreach (Vector2 pos in neighbors) {
