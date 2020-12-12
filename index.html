@@ -3,23 +3,78 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Fat Trash Pandas</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-    <script src="TemplateData/UnityProgress.js"></script>
+    <title>Trash Pandas</title>
     <script src="Build/UnityLoader.js"></script>
     <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/TrashPandas-gh-p.json", {onProgress: UnityProgress});
+      UnityLoader.instantiate("unityContainer", "Build/TrashPandas.json");
     </script>
   </head>
   <body>
-    <div class="webgl-content">
-      <div id="unityContainer" style="width: 960px; height: 600px"></div>
-      <div class="footer">
-        <div class="webgl-logo"></div>
-        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
-        <div class="title">Fat Trash Pandas</div>
-      </div>
-    </div>
+    <div id="unityContainer" style="width: 100%; height: 100%; margin: auto"></div>
+    <h1> Trash Pandas </h1>
+    <pre>
+Team 303:
+Alec Wolf, Cecil Choi, Divyansh Khare, Jarrett Mao, Julie Khou, Ly Phung, Oliver Berggren
+
+Rules:
+Players:
+Fat Trash Pandas is played by 3 players. Two are Trash Collectors, AKA the (Trash) “Humans”, and one is the
+Trash Panda, AKA the “Raccoon”.
+Game Objective:
+The objective of both teams is to collect the most Trash.
+Setup:
+Players decide on one person to be the Raccoon; the rest are Humans.
+  ● Humans: Place a Human token on the Dump tile. Start with 1 Gas token.
+  ● Raccoon: Place a Raccoon token on the Den tile. Start with 3 Poop tokens.
+Game Pieces:
+The Dump Tile:
+This is the Humans’ starting point. Humans return Trash tokens here after collecting them.
+The Den Tile:
+This is the Raccoon’s starting point. The Raccoon returns Trash tokens here after collecting them. The
+Raccoon can also gain one additional Poop token each time they return here, carrying up to 5 total.
+Gas Station Tile:
+If a Human is adjacent to a Gas station at the end of their turn, they gain a Gas token.
+Sewer Tiles:
+When a Raccoon lands on this tile, they may choose to teleport to another Sewer tile of their choosing and then
+must end their turn. Humans may land on a Sewer tile but cannot use them to teleport.
+Character Tokens: (3)
+Two Humans and one Raccoon.
+Gas Tokens: (2)
+Humans use the Gas tokens to boost their trucks. One Gas token allows a Human to move two additional
+hexes, and removes the Gas from their inventory.
+Poop Tokens: (9)
+The Raccoon can place down a Poop token from their inventory on an adjacent open hex anytime during their
+turn. Humans cannot move through Poop tokens, but the Raccoon can. A Human can take one full turn to
+remove an adjacent Poop token.
+Trash Tokens: (10)
+All players aim to gain as many of these as they can. A player can take the Trash token from an adjacent tile and
+add it to their inventory if they have space. Picking up Trash ends their turn.
+Turns and Abilities:
+Both Humans take their turns first, followed by the Raccoon. This process is repeated until the game ends.
+Raccoon:
+  ● Each turn, the Raccoon can move 5 hexes.
+    ○ For every 2 Trash in the Raccoon’s inventory, the Raccoon grows plump and loses one hex of
+      movement. Example: The Raccoon has collected 2 Trash, and therefore can only move 4 hexes
+      per turn. 4 Trash = 3 hexes, and so on.
+  ● Raccoons can hold a max of 4 Trash and 5 Poop.
+  ● Raccoons become scared when they are close to a Human. If a Human ends their turn adjacent to a
+    Raccoon that is carrying any Trash, the Raccoon must immediately drop 1 Trash on the closest
+    adjacent open hex of their choice.
+  ● Poops may be placed on an empty adjacent hex anytime during the Raccoon’s turn.
+  ● If the Raccoon is adjacent to the Den, they may return all their Trash. Their turn ends upon visiting the
+    Den.
+  ● Each time they return to their Den, add 1 Poop to their inventory until all Poop tokens are placed on
+    the map.
+
+Humans:
+  ● Each turn, the Humans can move 2 hexes.
+    ○ They may not move through Poop tokens, but they may remove any adjacent Poop token
+      using one full turn.
+  ● They can only hold 1 Trash and 1 Gas at a time.
+  ● Humans can scare the Raccoon, as described in the “Raccoon” section.
+  ● If the Humans are adjacent to the Dump, they may return their Trash from their inventory, ending
+    their turn.
+Ending The Game:
+The game ends when a team brings 5 Trash back to their corresponding Dump or Den. </pre>
   </body>
 </html>
