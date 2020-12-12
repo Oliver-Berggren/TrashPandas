@@ -83,32 +83,41 @@ public class UiManager : MonoBehaviour
                     mode.text += "Waiting";
                 }
 
-                //buttons
-                //gas button
-                gasButton.interactable = human1.has_gas;
-                getGasButton.interactable = human1.near_gas;
-
-                removePoopButton.interactable = false;
-                List<Vector2> neighbors = HexMap.instance.getNeighbors(human1.hexLocation);
-                foreach (Vector2 pos in neighbors) {
-                    if (HexMap.instance.getTileType(pos) == 7){
-                        removePoopButton.interactable = true;
-                        break;
-                    }
-                }
-
-                //pick up trash
-                if (human1.near_trash && human1.trash < 1){
-                    pickUp.interactable = true;
-                } else {
+                if (human1.move_mode){
+                    gasButton.interactable = false;
+                    getGasButton.interactable = false;
+                    removePoopButton.interactable = false;
                     pickUp.interactable = false;
-                }
-                
-                //drop off trash
-                if (human1.near_dump && human1.trash > 0) {
-                    dropOff.interactable = true;
-                } else {
                     dropOff.interactable = false;
+                } else {
+                    //buttons
+                    //gas button
+                    gasButton.interactable = human1.has_gas;
+                    getGasButton.interactable = human1.near_gas;
+                    move.interactable = true;
+
+                    removePoopButton.interactable = false;
+                    List<Vector2> neighbors = HexMap.instance.getNeighbors(human1.hexLocation);
+                    foreach (Vector2 pos in neighbors) {
+                        if (HexMap.instance.getTileType(pos) == 7){
+                            removePoopButton.interactable = true;
+                            break;
+                        }
+                    }
+
+                    //pick up trash
+                    if (human1.near_trash && human1.trash < 1){
+                        pickUp.interactable = true;
+                    } else {
+                        pickUp.interactable = false;
+                    }
+                    
+                    //drop off trash
+                    if (human1.near_dump && human1.trash > 0) {
+                        dropOff.interactable = true;
+                    } else {
+                        dropOff.interactable = false;
+                    }
                 }
 
             } else {
@@ -128,32 +137,42 @@ public class UiManager : MonoBehaviour
                     mode.text += "Waiting";
                 }
 
-                //buttons
-                //gas button
-                gasButton.interactable = human2.has_gas;
-                getGasButton.interactable = human2.near_gas;
 
-                removePoopButton.interactable = false;
-                List<Vector2> neighbors = HexMap.instance.getNeighbors(human2.hexLocation);
-                foreach (Vector2 pos in neighbors) {
-                    if (HexMap.instance.getTileType(pos) == 7){
-                        removePoopButton.interactable = true;
-                        break;
-                    }
-                }
-
-                //pick up trash
-                if (human2.near_trash && human2.trash < 1){
-                    pickUp.interactable = true;
-                } else {
+                if (human2.move_mode){
+                    gasButton.interactable = false;
+                    getGasButton.interactable = false;
+                    removePoopButton.interactable = false;
                     pickUp.interactable = false;
-                }
-                
-                //drop off trash
-                if (human2.near_dump && human2.trash > 0) {
-                    dropOff.interactable = true;
-                } else {
                     dropOff.interactable = false;
+                } else {
+                    //buttons
+                    //gas button
+                    gasButton.interactable = human2.has_gas;
+                    getGasButton.interactable = human2.near_gas;
+                    move.interactable = true;
+
+                    removePoopButton.interactable = false;
+                    List<Vector2> neighbors = HexMap.instance.getNeighbors(human2.hexLocation);
+                    foreach (Vector2 pos in neighbors) {
+                        if (HexMap.instance.getTileType(pos) == 7){
+                            removePoopButton.interactable = true;
+                            break;
+                        }
+                    }
+
+                    //pick up trash
+                    if (human2.near_trash && human2.trash < 1){
+                        pickUp.interactable = true;
+                    } else {
+                        pickUp.interactable = false;
+                    }
+                    
+                    //drop off trash
+                    if (human2.near_dump && human2.trash > 0) {
+                        dropOff.interactable = true;
+                    } else {
+                        dropOff.interactable = false;
+                    }
                 }
             }
         } else {
@@ -181,28 +200,47 @@ public class UiManager : MonoBehaviour
                 mode.text += "Waiting";
             }
 
-            //buttons
-            //poop
-            if(raccoon.poop > 0){
-                poopButton.interactable = true;
-            } else {
-                poopButton.interactable = false;
-            }
 
-            tunnelButton.interactable = raccoon.near_tunnel;
-
-            //pick up trash
-            if (raccoon.near_trash && raccoon.trash < 5){
-                pickUp.interactable = true;
-            } else {
+            if (raccoon.move_mode){
                 pickUp.interactable = false;
-            }
-
-            //drop off trash
-            if (raccoon.near_den && raccoon.trash > 0){
-                dropOff.interactable = true;
-            } else {
                 dropOff.interactable = false;
+                poopButton.interactable = false;
+                tunnelButton.interactable = false;
+            } else if (raccoon.poop_mode){
+                pickUp.interactable = false;
+                dropOff.interactable = false;
+                tunnelButton.interactable = false;
+                move.interactable = false;
+            } else if (raccoon.tunnel_mode){
+                pickUp.interactable = false;
+                dropOff.interactable = false;
+                poopButton.interactable = false;
+                move.interactable = false;
+            } else {
+                //buttons
+                //poop
+                if(raccoon.poop > 0){
+                    poopButton.interactable = true;
+                } else {
+                    poopButton.interactable = false;
+                }
+
+                tunnelButton.interactable = raccoon.near_tunnel;
+                move.interactable = true;
+
+                //pick up trash
+                if (raccoon.near_trash && raccoon.trash < 5){
+                    pickUp.interactable = true;
+                } else {
+                    pickUp.interactable = false;
+                }
+
+                //drop off trash
+                if (raccoon.near_den && raccoon.trash > 0){
+                    dropOff.interactable = true;
+                } else {
+                    dropOff.interactable = false;
+                }
             }
         }
     }
@@ -213,14 +251,26 @@ public class UiManager : MonoBehaviour
         //it no more available steps, disable button
 
         if (manager.playerIndex == 0){
-            human1.move_mode = true;
-            human1.move();
+            if (!human1.move_mode){
+                human1.move();
+                human1.move_mode = true;
+            } else {
+                human1.move_mode = false;
+            }
         } else if (manager.playerIndex == 1){
-            human2.move_mode = true;
-            human2.move();
+            if (!human2.move_mode){
+                human2.move();
+                human2.move_mode = true;
+            } else {
+                human2.move_mode = false;
+            }
         } else {
-            raccoon.move_mode = true;
-            raccoon.move();
+            if (!raccoon.move_mode){
+                raccoon.move();
+                raccoon.move_mode = true;
+            } else {
+                raccoon.move_mode = false;
+            }
         }
 
         updateUI();
@@ -299,8 +349,12 @@ public class UiManager : MonoBehaviour
         } else if (manager.playerIndex == 1){
             human2.use_gas();
         } else {
-            raccoon.poop_mode = true;
-            raccoon.use_poop();
+            if (!raccoon.poop_mode){
+                raccoon.use_poop();
+                raccoon.poop_mode = true;
+            } else {
+                raccoon.poop_mode = false;
+            }
         }
 
         updateUI();
@@ -323,8 +377,12 @@ public class UiManager : MonoBehaviour
     }
 
     public void tunnel(){
-        raccoon.tunnel_mode = true;
-        raccoon.useTunnel();
+        if (!raccoon.tunnel_mode){
+            raccoon.useTunnel();
+            raccoon.tunnel_mode = true;
+        } else {
+            raccoon.tunnel_mode = false;
+        }
         updateUI();
     }
 
