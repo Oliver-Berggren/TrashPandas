@@ -91,10 +91,10 @@ public class HexMap : MonoBehaviour
         List<List<int>> mapRaw = textToLayout();
 
         // Calculate length of one side(same as distance from center point to corner point)
-        sideLength = emptyTilePrefab.GetComponent<Renderer>().bounds.size.x / 2 + spacing;
+        sideLength = 0 + spacing;
 
         // Calculate height of tile (to determine y offset of placement)
-        tileHeight = emptyTilePrefab.GetComponent<Renderer>().bounds.size.y;
+        tileHeight = 0;
 
         // Calculate placement values
         xOffset = (3 * sideLength) / 2;
@@ -248,6 +248,7 @@ public class HexMap : MonoBehaviour
                 tileMap[loc] = newTile;
                 GameObject trash = Instantiate(trashPiecePrefab, Vector2.zero, Quaternion.identity);
                 instance.addPiece(loc, trash);
+                trash.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
                 newTile.GetComponent<TileInfo>().tileType = 6;
                 break;
             default: // Empty
@@ -366,7 +367,7 @@ public class HexMap : MonoBehaviour
     {
         foreach(Vector2 tile in tiles)
         {
-            getTile(tile).GetComponent<Renderer>().material = getTile(tile).GetComponent<TileInfo>().highlightMaterial;
+            // getTile(tile).GetComponent<Renderer>().material = getTile(tile).GetComponent<TileInfo>().highlightMaterial;
             highlighted.Add(tile);
         }
     }
@@ -376,7 +377,7 @@ public class HexMap : MonoBehaviour
     {
         foreach(Vector2 tile in highlighted)
         {
-            getTile(tile).GetComponent<Renderer>().material = getTile(tile).GetComponent<TileInfo>().defaultMaterial;
+            // getTile(tile).Find("HexDefault").GetComponent<Renderer>().material = getTile(tile).GetComponent<TileInfo>().defaultMaterial;
         }
         highlighted.Clear();
     }

@@ -18,30 +18,47 @@ public class AudioManager : MonoBehaviour
         {
             sound.audioSource = gameObject.AddComponent<AudioSource>();
             sound.audioSource.clip = sound.clip;
+            sound.audioSource.loop = sound.loop;
         }
     }
 
-    void Play(string name)
+    public void Play(string name)
     {
         foreach(Sound sound in sounds)
         {
             if(sound.name == name)
             {
-                sound.audioSource.Play();
+                if(sound.audioSource.clip != null)
+                {
+                    sound.audioSource.Play();
+                }
+                else
+                {
+                    Debug.Log(name + " audio clip null");
+                }
                 return;
             }
         }
+        Debug.Log(name + " sound object not found in audio manager");
     }
 
-    void Stop(string name)
+    public void Stop(string name)
     {
         foreach(Sound sound in sounds)
         {
             if(sound.name == name)
             {
-                sound.audioSource.Stop();
+                if(sound.audioSource.clip != null)
+                {
+                    sound.audioSource.Stop();
+                }
+                else
+                {
+                    Debug.Log(name + " audio clip null");
+                }
                 return;
             }
         }
+        Debug.Log(name + " sound object not found in audio manager");
     }
 }

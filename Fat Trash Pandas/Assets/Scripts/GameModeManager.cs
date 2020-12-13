@@ -20,6 +20,7 @@ public class GameModeManager : MonoBehaviour
         players.Add("H0");
         players.Add("H1");
         players.Add("R0");
+        AudioManager.instance.Play("backgroundMusic");
     }
 
     //Ends user turn
@@ -31,10 +32,14 @@ public class GameModeManager : MonoBehaviour
         if(den == 5) 
         {   //send end game signals to playercontroller / ui manager
             ui.GetComponent<UiManager>().endGame("den");
+            AudioManager.instance.Play("raccoonWins");
+            AudioManager.instance.Stop("backgroundMusic");
         }
         else if(dump == 5)
         {
             ui.GetComponent<UiManager>().endGame("dump");
+            AudioManager.instance.Play("humanWins");
+            AudioManager.instance.Stop("backgroundMusic");
         }
         //next player in queue
         else

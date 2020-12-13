@@ -13,6 +13,7 @@ public class Human : PlayerClass
     public void use_gas(){
         this.steps += 2;
         has_gas = false;
+        AudioManager.instance.Play("usePowerup");
     }
 
     public void get_gas(){
@@ -35,5 +36,6 @@ public class Human : PlayerClass
 
         game.end();
         ui.endTurnButton();
+        AudioManager.instance.Play("cleanPoop");
     }
 }
