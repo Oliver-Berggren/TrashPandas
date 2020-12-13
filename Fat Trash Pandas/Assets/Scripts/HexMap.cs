@@ -90,11 +90,12 @@ public class HexMap : MonoBehaviour
 
         List<List<int>> mapRaw = textToLayout();
 
+        Renderer rend = emptyTilePrefab.GetComponentsInChildren<Renderer>()[0];
         // Calculate length of one side(same as distance from center point to corner point)
-        sideLength = 0 + spacing;
+        sideLength = rend.bounds.size.x * rend.transform.localScale.x * 2 + spacing;
 
         // Calculate height of tile (to determine y offset of placement)
-        tileHeight = 0;
+        tileHeight = rend.bounds.size.y * rend.transform.localScale.y * 2;
 
         // Calculate placement values
         xOffset = (3 * sideLength) / 2;
