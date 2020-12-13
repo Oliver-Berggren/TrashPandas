@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 abstract public class PlayerClass : MonoBehaviour
 {
@@ -81,6 +82,7 @@ abstract public class PlayerClass : MonoBehaviour
                 {
                     isMoving = false;
                     HexMap.instance.addPiece(hexLocation, this.gameObject);
+                    HexMap.instance.unHighlightTiles();
                 }
                 else // more tiles on path
                 {
@@ -111,6 +113,7 @@ abstract public class PlayerClass : MonoBehaviour
     public void move(){
         PlayerController.instance.startListening(tryMove);
         possibleMoves = HexMap.instance.getPossibleMoves(hexLocation, steps, out prevTiles);
+        HexMap.instance.highlightTiles(possibleMoves.Keys.ToList());
     }
 
     // Modes
@@ -131,6 +134,7 @@ abstract public class PlayerClass : MonoBehaviour
         }
 
         steps = maxNumSteps;
+        HexMap.instance.unHighlightTiles();
     }
 
     public void pick_up(){
@@ -170,9 +174,11 @@ abstract public class PlayerClass : MonoBehaviour
     {
         if(possibleMoves.ContainsKey(loc))
         {
-            HexMap.instance.removePiece(hexLocation);
+            if(HexMap.instance.getTileType(hexLocation) == 1)
+            {
+                HexMap.instance.removePiece(hexLocation);
+            }
             startMoveAnim(loc);
-            // HexMap.instance.addPiece(loc, gameObject);
             hexLocation = loc;
             steps -= possibleMoves[loc];
             PlayerController.instance.stopListening();

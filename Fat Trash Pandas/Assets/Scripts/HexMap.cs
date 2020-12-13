@@ -71,6 +71,7 @@ public class HexMap : MonoBehaviour
     // Map Containers
     Dictionary<Vector2, GameObject> tileMap = new Dictionary<Vector2, GameObject>();
     List<Vector2> tunnels = new List<Vector2>();
+    List<Vector2> highlighted = new List<Vector2>();
     Vector2 den;
     Vector2 dump;
 
@@ -358,5 +359,25 @@ public class HexMap : MonoBehaviour
         }
 
         return possibleMoves;
+    }
+
+    // "Highlights" specified tiles to show possible interactable tiles
+    public void highlightTiles(List<Vector2> tiles)
+    {
+        foreach(Vector2 tile in tiles)
+        {
+            getTile(tile).GetComponent<Renderer>().material = getTile(tile).GetComponent<TileInfo>().highlightMaterial;
+            highlighted.Add(tile);
+        }
+    }
+
+    // Resets all highlighted tiles to default
+    public void unHighlightTiles()
+    {
+        foreach(Vector2 tile in highlighted)
+        {
+            getTile(tile).GetComponent<Renderer>().material = getTile(tile).GetComponent<TileInfo>().defaultMaterial;
+        }
+        highlighted.Clear();
     }
 }

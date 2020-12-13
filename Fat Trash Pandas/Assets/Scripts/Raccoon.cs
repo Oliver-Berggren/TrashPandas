@@ -28,6 +28,7 @@ public class Raccoon : PlayerClass
             }
 
             PlayerController.instance.startListening(tryPoop);
+            HexMap.instance.highlightTiles(empty);
         }
     }
 
@@ -56,6 +57,7 @@ public class Raccoon : PlayerClass
 
     public void useTunnel(){
         PlayerController.instance.startListening(tryTunnel);
+        HexMap.instance.highlightTiles(HexMap.instance.getTunnels());
     }
 
     void tryPoop(Vector2 loc){
@@ -68,6 +70,7 @@ public class Raccoon : PlayerClass
             poop_mode = false;
 
             PlayerController.instance.stopListening();
+            HexMap.instance.unHighlightTiles();
         }
 
         ui.updateUI();
@@ -87,6 +90,7 @@ public class Raccoon : PlayerClass
 
             game.end();
             ui.endTurnButton();
+            HexMap.instance.unHighlightTiles();
         }
 
         ui.updateUI();

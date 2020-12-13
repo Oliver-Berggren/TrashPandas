@@ -256,6 +256,7 @@ public class UiManager : MonoBehaviour
                 human1.move_mode = true;
             } else {
                 human1.move_mode = false;
+                HexMap.instance.unHighlightTiles();
             }
         } else if (manager.playerIndex == 1){
             if (!human2.move_mode){
@@ -263,6 +264,7 @@ public class UiManager : MonoBehaviour
                 human2.move_mode = true;
             } else {
                 human2.move_mode = false;
+                HexMap.instance.unHighlightTiles();
             }
         } else {
             if (!raccoon.move_mode){
@@ -270,6 +272,7 @@ public class UiManager : MonoBehaviour
                 raccoon.move_mode = true;
             } else {
                 raccoon.move_mode = false;
+                HexMap.instance.unHighlightTiles();
             }
         }
 
@@ -332,6 +335,7 @@ public class UiManager : MonoBehaviour
         }
 
         updateUI();
+        HexMap.instance.unHighlightTiles();
     }
 
     //gas for humans, poop for raccoon
@@ -354,6 +358,7 @@ public class UiManager : MonoBehaviour
                 raccoon.poop_mode = true;
             } else {
                 raccoon.poop_mode = false;
+                HexMap.instance.unHighlightTiles();
             }
         }
 
@@ -382,6 +387,7 @@ public class UiManager : MonoBehaviour
             raccoon.tunnel_mode = true;
         } else {
             raccoon.tunnel_mode = false;
+            HexMap.instance.unHighlightTiles();
         }
         updateUI();
     }
