@@ -13,6 +13,7 @@ public class UiManager : MonoBehaviour
     public GameObject player3;
     public Raccoon raccoon;
 
+
     //gamemode manager
     public GameObject man;
     GameModeManager manager;
