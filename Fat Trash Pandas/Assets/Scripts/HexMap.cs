@@ -248,6 +248,7 @@ public class HexMap : MonoBehaviour
                 tileMap[loc] = newTile;
                 GameObject trash = Instantiate(trashPiecePrefab, Vector2.zero, Quaternion.identity);
                 instance.addPiece(loc, trash);
+                trash.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
                 newTile.GetComponent<TileInfo>().tileType = 6;
                 break;
             default: // Empty
