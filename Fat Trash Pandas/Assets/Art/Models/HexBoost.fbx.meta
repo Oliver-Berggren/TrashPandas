@@ -6,7 +6,22 @@ ModelImporter:
   - first:
       74: 1827226128182048838
     second: Take 001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Alt
+    second: {fileID: 2100000, guid: 7791c8b3f6378384cb3c95441eb3ee54, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Alt2
+    second: {fileID: 2100000, guid: e03cdc50215da50449e77de564c4aa46, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hex
+    second: {fileID: 2100000, guid: 19fdb13aeed1ac7449eb1ba25295c456, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -37,7 +52,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 39.37
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -84,7 +99,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.39369997
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

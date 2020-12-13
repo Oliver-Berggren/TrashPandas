@@ -91,7 +91,7 @@ public class HexMap : MonoBehaviour
         List<List<int>> mapRaw = textToLayout();
 
         // Calculate length of one side(same as distance from center point to corner point)
-        sideLength = holeTilePrefab.GetComponent<Renderer>().bounds.size.x / 2 + spacing;
+        sideLength = emptyTilePrefab.GetComponent<Renderer>().bounds.size.x / 2 + spacing;
 
         // Calculate height of tile (to determine y offset of placement)
         tileHeight = emptyTilePrefab.GetComponent<Renderer>().bounds.size.y;
