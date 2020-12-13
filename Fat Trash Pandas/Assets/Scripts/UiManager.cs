@@ -12,53 +12,31 @@ public class UiManager : MonoBehaviour
     public Human human2;
     public GameObject player3;
     public Raccoon raccoon;
-
-    //gamemode manager
     public GameObject man;
     GameModeManager manager;
+
+    //action button
+    public Button pickUp;
+    public Button dropOff;
+    public Button move;
 
     //human
     public GameObject humanPanel;
     public Button gasButton;
     public Button getGasButton;
     public Button removePoopButton;
-    public Button humanPickUp;
-    public Button humanDropOff;
-    public Button humanMove;
-    //inv
-    public RawImage boost;
-    public RawImage humanTrashInv;
 
     //raccoon
     public GameObject raccoonPanel;
     public Button poopButton;
     public Button tunnelButton;
-    public Button raccoonPickUp;
-    public Button raccoonDropOff;
-    public Button raccoonMove;
-    //inv
-    public RawImage racpoop1;
-    public RawImage racpoop2;
-    public RawImage racpoop3;
-    public RawImage racpoop4;
-    public RawImage racpoop5;
-    public RawImage ractrash1;
-    public RawImage ractrash2;
-    public RawImage ractrash3;
-    public RawImage ractrash4;
     
     //display texts
     public Text displayTurn;
     public Text numSteps;
-
-    //scores
-    public Text humanScore;
-    public Text raccoonScore;
+    public Text inventory;
+    public Text score;
     public Text mode;
-
-    //winning screens
-    public GameObject humanWin;
-    public GameObject raccoonWin;
 
     void Start() {
         human1 = player1.GetComponent<Human>();
@@ -77,8 +55,7 @@ public class UiManager : MonoBehaviour
         //update the buttons if they need to be disabled/enabled
 
         //score
-        humanScore.text = "" + manager.dump;
-        raccoonScore.text = "" + manager.den;
+        score.text = "SCORE \n Humans: " + manager.dump + "\n Raccoon: " + manager.den;
         //mode
         mode.text = "Mode: ";
 
@@ -91,31 +68,33 @@ public class UiManager : MonoBehaviour
             if (manager.playerIndex == 0){
                 //text
                 displayTurn.text = "HUMAN 1 TURN";
-                numSteps.text = "" + human1.steps;
-                
-                //inventory
+                numSteps.text = "Steps: " + human1.steps;
+                inventory.text = "Inventory: ";
                 if (human1.has_gas)
-                    boost.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                else
-                    boost.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
+                    inventory.text += "Gas ";
+                    if (human1.trash > 0)
+                        inventory.text += "and Trash";
+                else if (human1.trash > 0)
+                    inventory.text += "Trash";
 
-                if (human1.trash > 0)
-                    humanTrashInv.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                else
-                    humanTrashInv.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
+                if (human1.move_mode){
+                    mode.text += "Moving";
+                } else {
+                    mode.text += "Waiting";
+                }
 
                 if (human1.move_mode){
                     gasButton.interactable = false;
                     getGasButton.interactable = false;
                     removePoopButton.interactable = false;
-                    humanPickUp.interactable = false;
-                    humanDropOff.interactable = false;
+                    pickUp.interactable = false;
+                    dropOff.interactable = false;
                 } else {
                     //buttons
                     //gas button
                     gasButton.interactable = human1.has_gas;
                     getGasButton.interactable = human1.near_gas;
-                    humanMove.interactable = true;
+                    move.interactable = true;
 
                     removePoopButton.interactable = false;
                     List<Vector2> neighbors = HexMap.instance.getNeighbors(human1.hexLocation);
@@ -128,46 +107,49 @@ public class UiManager : MonoBehaviour
 
                     //pick up trash
                     if (human1.near_trash && human1.trash < 1){
-                        humanPickUp.interactable = true;
+                        pickUp.interactable = true;
                     } else {
-                        humanPickUp.interactable = false;
+                        pickUp.interactable = false;
                     }
                     
                     //drop off trash
                     if (human1.near_dump && human1.trash > 0) {
-                        humanDropOff.interactable = true;
+                        dropOff.interactable = true;
                     } else {
-                        humanDropOff.interactable = false;
+                        dropOff.interactable = false;
                     }
                 }
 
             } else {
                 displayTurn.text = "HUMAN 2 TURN";
-                numSteps.text = "" + human2.steps;
-
-                //inventory
+                numSteps.text = "Steps: " + human2.steps;
+                inventory.text = "Inventory: ";
                 if (human2.has_gas)
-                    boost.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                else
-                    boost.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
+                    inventory.text += "Gas ";
+                    if (human2.trash > 0)
+                        inventory.text += "and Trash";
+                else if (human2.trash > 0)
+                    inventory.text += "Trash";
 
-                if (human2.trash > 0)
-                    humanTrashInv.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                else
-                    humanTrashInv.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
+                if (human2.move_mode){
+                    mode.text += "Moving";
+                } else {
+                    mode.text += "Waiting";
+                }
+
 
                 if (human2.move_mode){
                     gasButton.interactable = false;
                     getGasButton.interactable = false;
                     removePoopButton.interactable = false;
-                    humanPickUp.interactable = false;
-                    humanDropOff.interactable = false;
+                    pickUp.interactable = false;
+                    dropOff.interactable = false;
                 } else {
                     //buttons
                     //gas button
                     gasButton.interactable = human2.has_gas;
                     getGasButton.interactable = human2.near_gas;
-                    humanMove.interactable = true;
+                    move.interactable = true;
 
                     removePoopButton.interactable = false;
                     List<Vector2> neighbors = HexMap.instance.getNeighbors(human2.hexLocation);
@@ -180,16 +162,16 @@ public class UiManager : MonoBehaviour
 
                     //pick up trash
                     if (human2.near_trash && human2.trash < 1){
-                        humanPickUp.interactable = true;
+                        pickUp.interactable = true;
                     } else {
-                        humanPickUp.interactable = false;
+                        pickUp.interactable = false;
                     }
                     
                     //drop off trash
                     if (human2.near_dump && human2.trash > 0) {
-                        humanDropOff.interactable = true;
+                        dropOff.interactable = true;
                     } else {
-                        humanDropOff.interactable = false;
+                        dropOff.interactable = false;
                     }
                 }
             }
@@ -199,86 +181,14 @@ public class UiManager : MonoBehaviour
             raccoonPanel.SetActive(true);
 
             displayTurn.text = "RACCOON TURN";
-            numSteps.text = "" + raccoon.steps;
-
-            //inventory
-            switch(raccoon.poop){
-                case 1:
-                    racpoop1.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop2.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    racpoop3.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    racpoop4.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    racpoop5.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    break;
-                case 2:
-                    racpoop1.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop2.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop3.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    racpoop4.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    racpoop5.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    break;
-                case 3:
-                    racpoop1.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop2.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop3.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop4.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    racpoop5.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    break;
-                case 4:
-                    racpoop1.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop2.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop3.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop4.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop5.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    break;
-                case 5:
-                    racpoop1.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop2.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop3.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop4.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    racpoop5.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    break;
-                default:
-                    racpoop1.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    racpoop2.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    racpoop3.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    racpoop4.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    racpoop5.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    break;
-            }
-
-            switch(raccoon.trash){
-                case 1:
-                    ractrash1.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    ractrash2.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    ractrash3.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    ractrash4.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    break;
-                case 2:
-                    ractrash1.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    ractrash2.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    ractrash3.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    ractrash4.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    break;
-                case 3:
-                    ractrash1.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    ractrash2.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    ractrash3.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    ractrash4.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    break;
-                case 4:
-                    ractrash1.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    ractrash2.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    ractrash3.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    ractrash4.color = new Color(1.0f, 1.0f, 1.0f, 1f);
-                    break;
-                default:
-                    ractrash1.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    ractrash2.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    ractrash3.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    ractrash4.color = new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                    break;
-            }
+            numSteps.text = "Steps: " + raccoon.steps;
+            inventory.text = "Inventory: ";
+            if (raccoon.poop > 0)
+                inventory.text += "Poop= " + raccoon.poop;
+                if (raccoon.trash > 0)
+                    inventory.text += "and Trash= " + raccoon.trash;
+            else if (raccoon.trash > 0)
+                inventory.text += "Trash= " + raccoon.trash;
 
             if (raccoon.move_mode){
                 mode.text += "Moving";
@@ -292,20 +202,20 @@ public class UiManager : MonoBehaviour
 
 
             if (raccoon.move_mode){
-                raccoonPickUp.interactable = false;
-                raccoonDropOff.interactable = false;
+                pickUp.interactable = false;
+                dropOff.interactable = false;
                 poopButton.interactable = false;
                 tunnelButton.interactable = false;
             } else if (raccoon.poop_mode){
-                raccoonPickUp.interactable = false;
-                raccoonDropOff.interactable = false;
+                pickUp.interactable = false;
+                dropOff.interactable = false;
                 tunnelButton.interactable = false;
-                raccoonMove.interactable = false;
+                move.interactable = false;
             } else if (raccoon.tunnel_mode){
-                raccoonPickUp.interactable = false;
-                raccoonDropOff.interactable = false;
+                pickUp.interactable = false;
+                dropOff.interactable = false;
                 poopButton.interactable = false;
-                raccoonMove.interactable = false;
+                move.interactable = false;
             } else {
                 //buttons
                 //poop
@@ -316,20 +226,20 @@ public class UiManager : MonoBehaviour
                 }
 
                 tunnelButton.interactable = raccoon.near_tunnel;
-                raccoonMove.interactable = true;
+                move.interactable = true;
 
                 //pick up trash
                 if (raccoon.near_trash && raccoon.trash < 5){
-                    raccoonPickUp.interactable = true;
+                    pickUp.interactable = true;
                 } else {
-                    raccoonPickUp.interactable = false;
+                    pickUp.interactable = false;
                 }
 
                 //drop off trash
                 if (raccoon.near_den && raccoon.trash > 0){
-                    raccoonDropOff.interactable = true;
+                    dropOff.interactable = true;
                 } else {
-                    raccoonDropOff.interactable = false;
+                    dropOff.interactable = false;
                 }
             }
         }
@@ -487,17 +397,16 @@ public class UiManager : MonoBehaviour
     {
         poopButton.interactable = false;
         gasButton.interactable = false;
-        humanPickUp.interactable = false;
-        humanDropOff.interactable = false;
-        humanMove.interactable = false;
-        raccoonPickUp.interactable = false;
-        raccoonDropOff.interactable = false;
-        raccoonMove.interactable = false;
+        pickUp.interactable = false;
+        dropOff.interactable = false;
+        move.interactable = false;
 
         if(team.Equals("den")) {
-            raccoonWin.SetActive(true);
+            displayTurn.text = "Raccoon Wins";
+            Debug.Log("Raccoon Wins");
         } else {
-            humanWin.SetActive(true);
+            displayTurn.text = "Humans Wins";
+            Debug.Log("Humans Win");
         }
     }
 }
