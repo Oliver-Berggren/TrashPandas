@@ -61,6 +61,14 @@ public class HexMap : MonoBehaviour
     public GameObject holeTilePrefab;
     public GameObject trashPiecePrefab;
 
+    // Materials for changing highlight
+    public Material emptyTileDefault;
+    public Material emptyTileHighlight;
+    public Material tunnelTileHexDefault;
+    public Material tunnelTileDefault;
+    public Material tunnelTileHexHighlight;
+    public Material tunnelTileHighlight;
+
     // Display Parameters
     public float spacing;
 
@@ -90,11 +98,12 @@ public class HexMap : MonoBehaviour
 
         List<List<int>> mapRaw = textToLayout();
 
+        Renderer rend = emptyTilePrefab.GetComponentsInChildren<Renderer>()[0];
         // Calculate length of one side(same as distance from center point to corner point)
-        sideLength = 0 + spacing;
+        sideLength = rend.bounds.size.x * rend.transform.localScale.x * 2 + spacing;
 
         // Calculate height of tile (to determine y offset of placement)
-        tileHeight = 0;
+        tileHeight = rend.bounds.size.y * rend.transform.localScale.y * 2;
 
         // Calculate placement values
         xOffset = (3 * sideLength) / 2;
@@ -367,7 +376,21 @@ public class HexMap : MonoBehaviour
     {
         foreach(Vector2 tile in tiles)
         {
-            // getTile(tile).GetComponent<Renderer>().material = getTile(tile).GetComponent<TileInfo>().highlightMaterial;
+            foreach(Renderer rend in getTile(tile).GetComponentsInChildren<Renderer>())
+            {
+                if(rend.gameObject.name == "HexDefault") // Empty hex
+                {
+                    rend.material = emptyTileHighlight;
+                }
+                else if(rend.gameObject.name == "Hex") // Tunnel base hex
+                {
+                    rend.material = tunnelTileHexHighlight;
+                }
+                else if(rend.gameObject.name == "TunnelTop") // Tunnel top
+                {
+                    rend.material = tunnelTileHighlight;
+                }
+            }
             highlighted.Add(tile);
         }
     }
@@ -377,7 +400,21 @@ public class HexMap : MonoBehaviour
     {
         foreach(Vector2 tile in highlighted)
         {
-            // getTile(tile).Find("HexDefault").GetComponent<Renderer>().material = getTile(tile).GetComponent<TileInfo>().defaultMaterial;
+            foreach(Renderer rend in getTile(tile).GetComponentsInChildren<Renderer>())
+            {
+                if(rend.gameObject.name == "HexDefault") // Empty hex
+                {
+                    rend.material = emptyTileDefault;
+                }
+                else if(rend.gameObject.name == "Hex") // Tunnel base hex
+                {
+                    rend.material = tunnelTileHexDefault;
+                }
+                else if(rend.gameObject.name == "TunnelTop") // Tunnel top
+                {
+                    rend.material = tunnelTileDefault;
+                }
+            }
         }
         highlighted.Clear();
     }
