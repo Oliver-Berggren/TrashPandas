@@ -53,6 +53,7 @@ public class Raccoon : PlayerClass
 
             ui.updateUI();
         }
+        AudioManager.instance.Play("raccoonScared");
     }
 
     public void useTunnel(){
@@ -71,6 +72,7 @@ public class Raccoon : PlayerClass
 
             PlayerController.instance.stopListening();
             HexMap.instance.unHighlightTiles();
+            AudioManager.instance.Play("placePoop");
         }
 
         ui.updateUI();
@@ -91,6 +93,7 @@ public class Raccoon : PlayerClass
             game.end();
             ui.endTurnButton();
             HexMap.instance.unHighlightTiles();
+            AudioManager.instance.Play("useTunnel");
         }
 
         ui.updateUI();

@@ -75,7 +75,7 @@ abstract public class PlayerClass : MonoBehaviour
             }
             else // reached next tile
             {
-                Debug.Log("Tile Reached " + path[currStep]);
+                // Debug.Log("Tile Reached " + path[currStep]);
                 ++currStep;
                 moveElapsed = 0;
                 if(currStep >= path.Count) // past end of path
@@ -83,6 +83,15 @@ abstract public class PlayerClass : MonoBehaviour
                     isMoving = false;
                     HexMap.instance.addPiece(hexLocation, this.gameObject);
                     HexMap.instance.unHighlightTiles();
+
+                    if(is_raccoon)
+                    {
+                        AudioManager.instance.Stop("moveRaccoon");
+                    }
+                    else
+                    {
+                        AudioManager.instance.Stop("moveHuman");
+                    }
                 }
                 else // more tiles on path
                 {
@@ -103,7 +112,7 @@ abstract public class PlayerClass : MonoBehaviour
             }
             else
             {
-                 Debug.Log("Stopped turning " + hexLocation);
+                 // Debug.Log("Stopped turning " + hexLocation);
                  isTurning = false;
                  isMoving = true;
             }
@@ -122,10 +131,10 @@ abstract public class PlayerClass : MonoBehaviour
         move_mode = false;
 
         List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
-        Debug.Log("position:" + hexLocation);
-        Debug.Log("neighbors");
+        // Debug.Log("position:" + hexLocation);
+        // Debug.Log("neighbors");
         foreach (Vector2 pos in neighbors) {
-            Debug.Log(pos);
+            // Debug.Log(pos);
 
             if (HexMap.instance.getPiece(pos) == ui.player3){
                 ui.raccoon.scare();
@@ -186,6 +195,18 @@ abstract public class PlayerClass : MonoBehaviour
             move_mode = false;
 
             updateNeighbors();
+            if(is_raccoon)
+            {
+                AudioManager.instance.Play("moveRaccoon");
+            }
+            else
+            {
+                AudioManager.instance.Play("moveHuman");
+            }
+        }
+        else
+        {
+            AudioManager.instance.Play("invalidInput");
         }
 
         ui.updateUI();
@@ -213,7 +234,7 @@ abstract public class PlayerClass : MonoBehaviour
         startRot = transform.rotation;
         endRot = Quaternion.LookRotation(HexMap.instance.getTile(path[currStep]).transform.position - transform.position);
         turnElapsed = 0;
-        Debug.Log("Move Start");
+        // Debug.Log("Move Start");
     }
 
     void updateNeighbors()
