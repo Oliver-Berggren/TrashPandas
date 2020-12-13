@@ -31,6 +31,7 @@ public class RotationControl : MonoBehaviour
             newPos -= cameraAnchor.transform.right * Input.GetAxis("Mouse X") * camTranslateSpeed;
             cameraAnchor.transform.position = newPos;
         }
+        // Zoom
         Camera.main.transform.position += Camera.main.transform.forward * Input.GetAxis("Mouse ScrollWheel") * camZoomSpeed;
     }
 }
