@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!64 &8671143314487475140
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067373161374846557}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1126325301855851029, guid: 235e7efcdf60f3441b372097fa7ee040, type: 3}
 --- !u!1 &2070002163482297261
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +25,6 @@ GameObject:
   - component: {fileID: 6940438718954500975}
   - component: {fileID: 7048675320630944039}
   - component: {fileID: 2620774362671545994}
-  - component: {fileID: 6171455456419980672}
   m_Layer: 0
   m_Name: Poop
   m_TagString: Untagged
@@ -81,19 +94,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &6171455456419980672
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2070002163482297261}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &149036523915162380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -178,6 +178,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 235e7efcdf60f3441b372097fa7ee040, type: 3}
+--- !u!1 &1067373161374846557 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 235e7efcdf60f3441b372097fa7ee040,
+    type: 3}
+  m_PrefabInstance: {fileID: 149036523915162380}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &404130518334493927 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 235e7efcdf60f3441b372097fa7ee040,
