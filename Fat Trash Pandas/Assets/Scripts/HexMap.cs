@@ -410,7 +410,7 @@ public class HexMap : MonoBehaviour
                 {
                     rend.material = tunnelTileHexDefault;
                 }
-                else if(rend.gameObject.name == "Tunneltop") // Tunnel top
+                else if(rend.gameObject.name == "TunnelTop") // Tunnel top
                 {
                     rend.material = tunnelTileDefault;
                 }

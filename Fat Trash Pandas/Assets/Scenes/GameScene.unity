@@ -1967,12 +1967,14 @@ MonoBehaviour:
     type: 3}
   trashPiecePrefab: {fileID: 7977739633874924187, guid: d30990db842bb5d4398c83ff5c9d16ff,
     type: 3}
-  emptyTileDefault: {fileID: 0}
-  emptyTileHighlight: {fileID: 0}
-  tunnelTileHexDefault: {fileID: 0}
-  tunnelTileDefault: {fileID: 0}
-  tunnelTileHexHighlight: {fileID: 0}
-  tunnelTileHighlight: {fileID: 0}
+  emptyTileDefault: {fileID: 2100000, guid: 50cd468d36c95f64c9a62f6fe3060571, type: 2}
+  emptyTileHighlight: {fileID: 2100000, guid: 25f00f52506d2514cb40031ccb9d75f9, type: 2}
+  tunnelTileHexDefault: {fileID: 2100000, guid: 3f5543c0fed9f37458533c53a63a1e6a,
+    type: 2}
+  tunnelTileDefault: {fileID: 2100000, guid: 4cf250f612e2a5643aeeda7e5b6213ac, type: 2}
+  tunnelTileHexHighlight: {fileID: 2100000, guid: 4d04df39b8a845b4db2bb28f9d0c298a,
+    type: 2}
+  tunnelTileHighlight: {fileID: 2100000, guid: dc746891040236544a36e5290820c2bc, type: 2}
   spacing: 0
   xOffset: 0
   yOffset: 0
@@ -3369,9 +3371,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a91a0003d299e4da2d977cd198864f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRotSpeed: 3
-  camZoomSpeed: 4
-  camTranslateSpeed: 0.5
+  camRotSpeed: 300
+  camZoomSpeed: 400
+  camTranslateSpeed: 50
   cameraAnchor: {fileID: 1362287950}
 --- !u!1 &1192319827
 GameObject:
