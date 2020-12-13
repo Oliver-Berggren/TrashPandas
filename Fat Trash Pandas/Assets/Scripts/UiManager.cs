@@ -93,6 +93,12 @@ public class UiManager : MonoBehaviour
                 displayTurn.text = "HUMAN 1 TURN";
                 numSteps.text = "" + human1.steps;
                 
+                if (human1.move_mode){
+                    mode.text += "Moving";
+                } else {
+                    mode.text += "Waiting";
+                }
+
                 //inventory
                 if (human1.has_gas)
                     boost.color = new Color(1.0f, 1.0f, 1.0f, 1f);
@@ -144,6 +150,12 @@ public class UiManager : MonoBehaviour
             } else {
                 displayTurn.text = "HUMAN 2 TURN";
                 numSteps.text = "" + human2.steps;
+
+                if (human2.move_mode){
+                    mode.text += "Moving";
+                } else {
+                    mode.text += "Waiting";
+                }
 
                 //inventory
                 if (human2.has_gas)
