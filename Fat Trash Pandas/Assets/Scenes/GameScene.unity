@@ -1967,6 +1967,12 @@ MonoBehaviour:
     type: 3}
   trashPiecePrefab: {fileID: 7977739633874924187, guid: d30990db842bb5d4398c83ff5c9d16ff,
     type: 3}
+  emptyTileDefault: {fileID: 0}
+  emptyTileHighlight: {fileID: 0}
+  tunnelTileHexDefault: {fileID: 0}
+  tunnelTileDefault: {fileID: 0}
+  tunnelTileHexHighlight: {fileID: 0}
+  tunnelTileHighlight: {fileID: 0}
   spacing: 0
   xOffset: 0
   yOffset: 0
@@ -3363,7 +3369,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a91a0003d299e4da2d977cd198864f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRotSpeed: 2
+  camRotSpeed: 3
+  camZoomSpeed: 4
+  camTranslateSpeed: 0.5
   cameraAnchor: {fileID: 1362287950}
 --- !u!1 &1192319827
 GameObject:
