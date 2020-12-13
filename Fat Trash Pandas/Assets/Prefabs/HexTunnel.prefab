@@ -96,8 +96,8 @@ MonoBehaviour:
   tileType: 5
   occupant: {fileID: 0}
   hexCoordinate: {x: 0, y: 0}
-  defaultMaterial: {fileID: 2100000, guid: d38d9a6f7d3df5b41915da5c02b2d080, type: 2}
-  highlightMaterial: {fileID: 2100000, guid: 2d84fa4dacf381848ab9fc595c767093, type: 2}
+  defaultMaterial: {fileID: 0}
+  highlightMaterial: {fileID: 0}
 --- !u!64 &3859633746802769645
 MeshCollider:
   m_ObjectHideFlags: 0
