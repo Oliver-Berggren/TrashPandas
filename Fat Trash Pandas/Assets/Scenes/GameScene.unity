@@ -2019,6 +2019,7 @@ MonoBehaviour:
   yOffset: 0
   mapLayout: {fileID: 4900000, guid: 13dee98d2d49b3d4b86847b6f73d244c, type: 3}
   mapCenter: {x: 0, y: 0, z: 0}
+  bounds: {x: 0, y: 0, z: 0}
 --- !u!4 &578399559
 Transform:
   m_ObjectHideFlags: 0
@@ -3567,9 +3568,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a91a0003d299e4da2d977cd198864f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRotSpeed: 300
+  camRotSpeed: 150
   camZoomSpeed: 400
-  camTranslateSpeed: 50
+  camTranslateSpeed: 15
   cameraAnchor: {fileID: 1362287950}
 --- !u!1 &1192319827
 GameObject:

@@ -99,6 +99,10 @@ abstract public class PlayerClass : MonoBehaviour
                     isMoving = false;
                     startRot = transform.rotation;
                     endRot = Quaternion.LookRotation(HexMap.instance.getTile(path[currStep]).transform.position - transform.position);
+                    if(!is_raccoon)
+                    {
+                        endRot *= Quaternion.Euler(0, -90, 0);
+                    }
                     turnElapsed = 0;
                 }
             }
@@ -233,6 +237,10 @@ abstract public class PlayerClass : MonoBehaviour
         isMoving = false;
         startRot = transform.rotation;
         endRot = Quaternion.LookRotation(HexMap.instance.getTile(path[currStep]).transform.position - transform.position);
+        if(!is_raccoon)
+        {
+            endRot *= Quaternion.Euler(0, -90, 0);
+        }
         turnElapsed = 0;
         // Debug.Log("Move Start");
     }
