@@ -423,4 +423,9 @@ public class HexMap : MonoBehaviour
         }
         highlighted.Clear();
     }
+
+    public bool isTile(Vector2 loc)
+    {
+        return tileMap.ContainsKey(loc);
+    }
 }

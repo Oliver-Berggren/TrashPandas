@@ -210,7 +210,7 @@ abstract public class PlayerClass : MonoBehaviour
                 AudioManager.instance.Play("moveHuman");
             }
         }
-        else
+        else if(HexMap.instance.isTile(loc))
         {
             AudioManager.instance.Play("invalidInput");
         }
