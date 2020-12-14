@@ -14,12 +14,12 @@ public class RotationControl : MonoBehaviour
     {
         cameraAnchor.transform.position = HexMap.instance.getMapCenter();
         Camera.main.transform.parent = cameraAnchor.transform;
+        Camera.main.transform.LookAt(HexMap.instance.mapCenter);
     }
 
     void Update()
     {
         Vector3 anchorPos = cameraAnchor.transform.position;
-        Vector3 camPos = Camera.main.transform.position;
 
         // Rotate camera if right mouse down
         if (Input.GetMouseButton(1))
@@ -35,15 +35,15 @@ public class RotationControl : MonoBehaviour
         }
 
         // Zoom
-        camPos += Camera.main.transform.forward * Input.GetAxis("Mouse ScrollWheel") * camZoomSpeed * Time.deltaTime;
+        if((Input.GetAxis("Mouse ScrollWheel") > 0 && Camera.main.transform.position.y > 2.5f) || 
+           (Input.GetAxis("Mouse ScrollWheel") < 0 && Camera.main.transform.position.y < HexMap.instance.bounds.y))
+        {
+            Camera.main.transform.position += Camera.main.transform.forward * Input.GetAxis("Mouse ScrollWheel") * camZoomSpeed * Time.deltaTime;
+        }
 
-        // Apply new positions
+        // Apply new anchor position
         anchorPos.x = Mathf.Clamp(anchorPos.x, 0, HexMap.instance.bounds.x);
         anchorPos.z = Mathf.Clamp(anchorPos.z, 0, HexMap.instance.bounds.z);
-        if(camPos.y > 2.5f && camPos.y < HexMap.instance.bounds.y)
-        {
-            Camera.main.transform.position = camPos;
-        }
         cameraAnchor.transform.position = anchorPos;
     }
 }
