@@ -162,6 +162,7 @@ abstract public class PlayerClass : MonoBehaviour
                     Destroy(HexMap.instance.getPiece(trashLoc));
                     HexMap.instance.removePiece(trashLoc);
                     HexMap.instance.setTileType(trashLoc, 1);
+                    AudioManager.instance.Play("collectTrash");
                     break;
                 }
             }

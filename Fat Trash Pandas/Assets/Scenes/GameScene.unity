@@ -5813,48 +5813,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: moveHuman
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: f6fd79a3ae917674f875c58ea042fab6, type: 3}
     loop: 1
     audioSource: {fileID: 0}
   - name: moveRaccoon
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 81a8332f8faa92642a1a1a8835cd7b31, type: 3}
     loop: 1
     audioSource: {fileID: 0}
   - name: cleanPoop
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 6eaad3fc5e34f494c938dc0a389caf28, type: 3}
     loop: 0
     audioSource: {fileID: 0}
   - name: placePoop
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 604b0871f1ba31d419622c4e947e6069, type: 3}
     loop: 0
     audioSource: {fileID: 0}
   - name: usePowerup
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 553370df13ebe7c4db9b410eac6c9f06, type: 3}
     loop: 0
     audioSource: {fileID: 0}
   - name: useTunnel
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 0a8154586ed5b584290ee59dc5d4e824, type: 3}
     loop: 0
     audioSource: {fileID: 0}
   - name: raccoonScared
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 432528cb12020cc4a92823b32599543d, type: 3}
     loop: 0
     audioSource: {fileID: 0}
   - name: humanWins
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 7abc25850b224fe4bbfdbf0e02cf4064, type: 3}
     loop: 0
     audioSource: {fileID: 0}
   - name: raccoonWins
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 56bfe1c37a986c942bd364ed688fb0ab, type: 3}
     loop: 0
     audioSource: {fileID: 0}
   - name: invalidInput
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 7fe4585a93f3b5948ba6266ab186e015, type: 3}
     loop: 0
     audioSource: {fileID: 0}
   - name: backgroundMusic
     clip: {fileID: 0}
     loop: 1
+    audioSource: {fileID: 0}
+  - name: collectTrash
+    clip: {fileID: 8300000, guid: 7888b64a6bce1534e83247508df30f4c, type: 3}
+    loop: 0
     audioSource: {fileID: 0}
 --- !u!4 &2047753926
 Transform:
