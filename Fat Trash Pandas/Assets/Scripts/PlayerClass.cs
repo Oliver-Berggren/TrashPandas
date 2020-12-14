@@ -146,6 +146,11 @@ abstract public class PlayerClass : MonoBehaviour
             }
         }
 
+        // Update neighbors of all players
+        ui.human1.updateNeighbors();
+        ui.human2.updateNeighbors();
+        ui.raccoon.updateNeighbors();
+
         steps = maxNumSteps;
         HexMap.instance.unHighlightTiles();
     }
