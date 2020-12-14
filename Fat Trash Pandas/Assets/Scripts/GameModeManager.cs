@@ -29,13 +29,13 @@ public class GameModeManager : MonoBehaviour
        //update points
 
        //check win conditions
-        if(den == 5) 
+        if(den >= 5) 
         {   //send end game signals to playercontroller / ui manager
             ui.GetComponent<UiManager>().endGame("den");
             AudioManager.instance.Play("raccoonWins");
             AudioManager.instance.Stop("backgroundMusic");
         }
-        else if(dump == 5)
+        else if(dump >= 5)
         {
             ui.GetComponent<UiManager>().endGame("dump");
             AudioManager.instance.Play("humanWins");
