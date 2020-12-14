@@ -52,6 +52,7 @@ public class Raccoon : PlayerClass
                 HexMap.instance.setTileType(empty[index], 6);
 
                 --trash;
+                ++steps;
 
                 ui.updateUI();
             }
@@ -65,7 +66,8 @@ public class Raccoon : PlayerClass
     }
 
     void tryPoop(Vector2 loc){
-        if (neighbors.Contains(loc) && HexMap.instance.getTileType(loc) == 1){
+        if (neighbors.Contains(loc) && HexMap.instance.getTileType(loc) == 1 &&
+            HexMap.instance.isTraversable(loc)){
             GameObject poopObj = Instantiate(poopPrefab, Vector2.zero, Quaternion.identity);
             HexMap.instance.addPiece(loc, poopObj);
             HexMap.instance.setTileType(loc, 7);
