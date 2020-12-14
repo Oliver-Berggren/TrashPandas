@@ -180,6 +180,7 @@ abstract public class PlayerClass : MonoBehaviour
             game.setDen(trash);
         }
         trash = 0;
+        AudioManager.instance.Play("dumpTrash");
         game.end();
         ui.endTurnButton();
     }

@@ -5740,6 +5740,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 7888b64a6bce1534e83247508df30f4c, type: 3}
     loop: 0
     audioSource: {fileID: 0}
+  - name: dumpTrash
+    clip: {fileID: 8300000, guid: 1388468ff07bd9d45889c6eaeb55568f, type: 3}
+    loop: 0
+    audioSource: {fileID: 0}
 --- !u!4 &2047753926
 Transform:
   m_ObjectHideFlags: 0
