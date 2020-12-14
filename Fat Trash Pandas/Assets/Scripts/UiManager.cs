@@ -359,6 +359,7 @@ public class UiManager : MonoBehaviour
                 human1.move_mode = true;
             } else {
                 human1.move_mode = false;
+                PlayerController.instance.stopListening();
                 HexMap.instance.unHighlightTiles();
             }
         } else if (manager.playerIndex == 1){
@@ -367,6 +368,7 @@ public class UiManager : MonoBehaviour
                 human2.move_mode = true;
             } else {
                 human2.move_mode = false;
+                PlayerController.instance.stopListening();
                 HexMap.instance.unHighlightTiles();
             }
         } else {
@@ -375,6 +377,7 @@ public class UiManager : MonoBehaviour
                 raccoon.move_mode = true;
             } else {
                 raccoon.move_mode = false;
+                PlayerController.instance.stopListening();
                 HexMap.instance.unHighlightTiles();
             }
         }
