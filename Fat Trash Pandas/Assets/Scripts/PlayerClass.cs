@@ -188,7 +188,8 @@ abstract public class PlayerClass : MonoBehaviour
     {
         if(possibleMoves.ContainsKey(loc))
         {
-            if(HexMap.instance.getTileType(hexLocation) == 1)
+            if(HexMap.instance.getTileType(hexLocation) == 1 ||
+               HexMap.instance.getTileType(hexLocation) == 5)
             {
                 HexMap.instance.removePiece(hexLocation);
             }
