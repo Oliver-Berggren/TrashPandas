@@ -3512,6 +3512,8 @@ MonoBehaviour:
   camZoomSpeed: 400
   camTranslateSpeed: 15
   cameraAnchor: {fileID: 1362287950}
+  minZoomHeight: 4
+  maxZoomHeight: 30
 --- !u!1 &1192319827
 GameObject:
   m_ObjectHideFlags: 0

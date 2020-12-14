@@ -113,7 +113,6 @@ public class HexMap : MonoBehaviour
         // Calculate map dimension variables
         bounds = new Vector3();
         bounds.x = xOffset * (mapRaw[0].Count);
-        bounds.y = 30;
         bounds.z = yOffset * (mapRaw.Count);
         mapCenter = new Vector3(xOffset * (mapRaw[0].Count - 1) / 2, 0, yOffset * (mapRaw.Count - 1) / 2);
 
