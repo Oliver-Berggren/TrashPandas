@@ -121,7 +121,8 @@ public class UiManager : MonoBehaviour
                     //buttons
                     //gas button
                     gasButton.interactable = human1.has_gas;
-                    getGasButton.interactable = human1.near_gas;
+                    if (!human1.has_gas)
+                        getGasButton.interactable = human1.near_gas;
                     humanMove.interactable = true;
 
                     removePoopButton.interactable = false;
@@ -179,7 +180,8 @@ public class UiManager : MonoBehaviour
                     //buttons
                     //gas button
                     gasButton.interactable = human2.has_gas;
-                    getGasButton.interactable = human2.near_gas;
+                    if (!human2.has_gas)
+                        getGasButton.interactable = human2.near_gas;
                     humanMove.interactable = true;
 
                     removePoopButton.interactable = false;
