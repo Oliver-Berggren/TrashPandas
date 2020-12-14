@@ -9,6 +9,8 @@ public class RotationControl : MonoBehaviour
     public float camZoomSpeed;
     public float camTranslateSpeed;
     public GameObject cameraAnchor; // Anchor object for camera rotation
+    public float minZoomHeight;
+    public float maxZoomHeight;
 
     void Start()
     {
@@ -35,8 +37,8 @@ public class RotationControl : MonoBehaviour
         }
 
         // Zoom
-        if((Input.GetAxis("Mouse ScrollWheel") > 0 && Camera.main.transform.position.y > 2.5f) || 
-           (Input.GetAxis("Mouse ScrollWheel") < 0 && Camera.main.transform.position.y < HexMap.instance.bounds.y))
+        if((Input.GetAxis("Mouse ScrollWheel") > 0 && Camera.main.transform.position.y > minZoomHeight) || 
+           (Input.GetAxis("Mouse ScrollWheel") < 0 && Camera.main.transform.position.y < maxZoomHeight))
         {
             Camera.main.transform.position += Camera.main.transform.forward * Input.GetAxis("Mouse ScrollWheel") * camZoomSpeed * Time.deltaTime;
         }

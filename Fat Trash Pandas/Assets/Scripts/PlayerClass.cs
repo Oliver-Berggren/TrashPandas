@@ -146,6 +146,11 @@ abstract public class PlayerClass : MonoBehaviour
             }
         }
 
+        // Update neighbors of all players
+        ui.human1.updateNeighbors();
+        ui.human2.updateNeighbors();
+        ui.raccoon.updateNeighbors();
+
         steps = maxNumSteps;
         HexMap.instance.unHighlightTiles();
     }
@@ -180,6 +185,7 @@ abstract public class PlayerClass : MonoBehaviour
             game.setDen(trash);
         }
         trash = 0;
+        AudioManager.instance.Play("dumpTrash");
         game.end();
         ui.endTurnButton();
     }
@@ -210,7 +216,7 @@ abstract public class PlayerClass : MonoBehaviour
                 AudioManager.instance.Play("moveHuman");
             }
         }
-        else
+        else if(HexMap.instance.isTile(loc))
         {
             AudioManager.instance.Play("invalidInput");
         }

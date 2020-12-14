@@ -37,21 +37,24 @@ public class Raccoon : PlayerClass
             List<Vector2> neighbors = HexMap.instance.getNeighbors(hexLocation);
             List<Vector2> empty = new List<Vector2>();
             foreach (Vector2 pos in neighbors){
-                int type = HexMap.instance.getTileType(pos);
-                if (type == 1){
+                if (HexMap.instance.isTraversable(pos) && HexMap.instance.getTileType(pos) != 5){
                     empty.Add(pos);
                 }
             }
 
-            int index = Random.Range(0, empty.Count);
 
-            GameObject trashPrefab = Instantiate(trashPiecePrefab, Vector2.zero, Quaternion.identity);
-            HexMap.instance.addPiece(empty[index], trashPrefab);
-            HexMap.instance.setTileType(empty[index], 6);
+            if(empty.Count > 0)
+            {
+                int index = Random.Range(0, empty.Count);
+                
+                GameObject trashPrefab = Instantiate(trashPiecePrefab, Vector2.zero, Quaternion.identity);
+                HexMap.instance.addPiece(empty[index], trashPrefab);
+                HexMap.instance.setTileType(empty[index], 6);
 
-            --trash;
+                --trash;
 
-            ui.updateUI();
+                ui.updateUI();
+            }
         }
         AudioManager.instance.Play("raccoonScared");
     }
